@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Massage Flashcards</title>
+<link rel="stylesheet" href="flashcards.css">
+</head>
+<body>
+<header>
+  <h1>Massage <em>Flashcards</em></h1>
+  <p>Tap to reveal answer</p>
+</header>
+<div class="filters" id="filters">
+  <button class="fbtn active" data-t="all">All</button>
+  <button class="fbtn" data-t="anatomy">Anatomy</button>
+  <button class="fbtn" data-t="muscles">Muscles</button>
+  <button class="fbtn" data-t="bones">Bones</button>
+  <button class="fbtn" data-t="pathology">Pathology</button>
+  <button class="fbtn" data-t="kinesiology">Kinesiology</button>
+</div>
+<div class="prog">
+  <div class="prog-info"><span id="pt">Loading...</span><span id="pp"></span></div>
+  <div class="bar"><div class="fill" id="pf" style="width:0%"></div></div>
+</div>
+<div class="scene" onclick="flip()">
+  <div class="card" id="card">
+    <div class="face front">
+      <div class="topic" id="ft"></div>
+      <div class="qtext" id="fq"></div>
+      <div class="hint">tap to reveal</div>
+    </div>
+    <div class="face back">
+      <div class="topic">Answer</div>
+      <div class="qtext" id="ba"></div>
+    </div>
+  </div>
+</div>
+<div class="controls">
+  <button class="btn btn-s" id="pb" onclick="prev()">&#8592; Prev</button>
+  <button class="btn btn-p" id="nb" onclick="next()">Next &#8594;</button>
+  <button class="btn btn-s" onclick="shuffle()">Shuffle</button>
+</div>
+<div class="stats">
+  <div class="stat"><div class="sn" id="ss">0</div><div class="sl">Seen</div></div>
+  <div class="stat"><div class="sn" id="st">-</div><div class="sl">Total</div></div>
+  <div class="stat"><div class="sn" id="sl">-</div><div class="sl">Left</div></div>
+</div>
+<script src="flashcards.js"></script>
+</body>
+</html>

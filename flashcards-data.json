@@ -1,0 +1,117 @@
+[
+  {
+    "topic": "anatomy",
+    "q": "What are the 4 types of tissue found in the human body?",
+    "a": "Epithelial, Connective, Muscle, and Nervous tissue."
+  },
+  {
+    "topic": "anatomy",
+    "q": "What is the function of the lymphatic system?",
+    "a": "Returns excess interstitial fluid to the blood, filters pathogens, and supports immune response."
+  },
+  {
+    "topic": "anatomy",
+    "q": "What is the difference between the sympathetic and parasympathetic nervous systems?",
+    "a": "Sympathetic = fight or flight (arousal). Parasympathetic = rest and digest (relaxation)."
+  },
+  {
+    "topic": "anatomy",
+    "q": "What are the three layers of the skin?",
+    "a": "Epidermis (outer), Dermis (middle), and Hypodermis/Subcutaneous layer (deep)."
+  },
+  {
+    "topic": "anatomy",
+    "q": "What is fascia?",
+    "a": "A connective tissue that surrounds and supports muscles, organs, and structures throughout the body."
+  },
+  {
+    "topic": "anatomy",
+    "q": "What is the role of the circulatory system in massage?",
+    "a": "Massage increases circulation, delivering oxygen and nutrients while removing metabolic waste."
+  },
+  {
+    "topic": "anatomy",
+    "q": "Define anatomical position.",
+    "a": "Body standing upright, feet together, palms facing forward, thumbs pointing away from the body."
+  },
+  {
+    "topic": "anatomy",
+    "q": "What is homeostasis?",
+    "a": "The body's ability to maintain a stable internal environment despite external changes."
+  },
+  {
+    "topic": "bones",
+    "q": "What are the bones of the shoulder girdle?",
+    "a": "Clavicle (collarbone) and Scapula (shoulder blade)."
+  },
+  {
+    "topic": "bones",
+    "q": "What is the ASIS?",
+    "a": "Anterior Superior Iliac Spine - a bony landmark on the front of the pelvis used as a reference point."
+  },
+  {
+    "topic": "bones",
+    "q": "Name the 8 carpal bones.",
+    "a": "Scaphoid, Lunate, Triquetrum, Pisiform, Trapezium, Trapezoid, Capitate, Hamate."
+  },
+  {
+    "topic": "bones",
+    "q": "What is the xiphoid process?",
+    "a": "The small cartilaginous extension at the inferior end of the sternum."
+  },
+  {
+    "topic": "bones",
+    "q": "How many vertebrae are in each spinal region?",
+    "a": "Cervical: 7, Thoracic: 12, Lumbar: 5, Sacral: 5 (fused), Coccygeal: 4 (fused)."
+  },
+  {
+    "topic": "bones",
+    "q": "What is the greater trochanter?",
+    "a": "A bony prominence on the lateral proximal femur; attachment point for several hip muscles."
+  },
+  {
+    "topic": "bones",
+    "q": "What bones form the knee joint?",
+    "a": "Femur, Tibia, and Patella (kneecap)."
+  },
+  {
+    "topic": "pathology",
+    "q": "What is a contraindication?",
+    "a": "A condition or factor that makes massage inadvisable or potentially harmful."
+  },
+  {
+    "topic": "pathology",
+    "q": "What is the difference between a local and absolute contraindication?",
+    "a": "Local: avoid massage in a specific area. Absolute: massage is completely contraindicated for the whole body."
+  },
+  {
+    "topic": "pathology",
+    "q": "Is deep tissue massage contraindicated for varicose veins?",
+    "a": "Yes - direct pressure over varicose veins is locally contraindicated due to risk of blood clot dislodgement."
+  },
+  {
+    "topic": "pathology",
+    "q": "What is DVT and why is it a contraindication?",
+    "a": "Deep Vein Thrombosis - a blood clot in a deep vein. Massage could dislodge the clot, causing an embolism."
+  },
+  {
+    "topic": "pathology",
+    "q": "Is massage indicated or contraindicated during an acute injury?",
+    "a": "Contraindicated in the acute phase (first 24-72 hrs). RICE protocol applies: Rest, Ice, Compression, Elevation."
+  },
+  {
+    "topic": "pathology",
+    "q": "What is a trigger point?",
+    "a": "A hyperirritable spot in muscle tissue that is tender on compression and can refer pain to other areas."
+  },
+  {
+    "topic": "pathology",
+    "q": "Can massage be performed on a client with uncontrolled hypertension?",
+    "a": "Generally contraindicated. Light massage may be acceptable with physician clearance; avoid deep or vigorous work."
+  },
+  {
+    "topic": "pathology",
+    "q": "What skin conditions are local contraindications for massage?",
+    "a": "Open wounds, burns, rashes, fungal infections (ringworm, athlete's foot), bruises, and active eczema/psoriasis flares."
+  }
+]

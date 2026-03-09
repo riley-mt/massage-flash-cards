@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Massage School — Study Cards</title>
+<link rel="stylesheet" href="muscles-west.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header>
+  <div class="eyebrow">Massage School</div>
+  <h1>Study <em>Cards</em></h1>
+  <p class="app-subtitle">Flashcards &middot; Muscles &middot; Prime Movers &mdash; tap a card to reveal</p>
+</header>
+
+<div id="warn-banner" class="warn-banner" style="display:none"></div>
+
+<!-- Tier 1: Deck selector -->
+<div class="deck-selector" id="filter-deck">
+  <button class="dbtn active" data-deck="all">All</button>
+  <button class="dbtn d-anatomy"   data-deck="anatomy">Anatomy</button>
+  <button class="dbtn d-bones"     data-deck="bones">Bones</button>
+  <button class="dbtn d-pathology" data-deck="pathology">Pathology</button>
+  <button class="dbtn d-muscles"   data-deck="muscles">Muscles</button>
+  <button class="dbtn d-prime"     data-deck="prime-movers">Prime Movers</button>
+</div>
+
+<!-- Tier 2: Category chips -->
+<div id="filter-cat"></div>
+
+<!-- Tier 3: Tag chips -->
+<div id="filter-tags"></div>
+
+<!-- Search -->
+<div class="search-wrap">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f0ebe0" stroke-width="2.5" stroke-linecap="round">
+    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </svg>
+  <input type="search" id="search-input" placeholder="Search cards&hellip;" autocomplete="off">
+</div>
+
+<!-- Quiz modes -->
+<div class="modes" id="modes">
+  <button class="mode active" data-mode="all">Full Card</button>
+</div>
+
+<!-- Options row -->
+<div class="options-row" style="gap:8px">
+  <label class="toggle" id="flip-label">
+    <input type="checkbox" id="flip-toggle">
+    Start cards flipped
+  </label>
+  <label class="toggle" id="smart-review-toggle">
+    <input type="checkbox" id="smart-review-input">
+    Still Learning only (<span id="learning-count">0</span>)
+  </label>
+</div>
+
+<!-- Progress -->
+<div class="prog">
+  <div class="prog-info"><span id="prog-text">Loading&hellip;</span><span id="prog-pct"></span></div>
+  <div class="bar"><div class="fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+
+<!-- Card -->
+<div class="scene" id="scene" onclick="flipCard()">
+  <div class="card" id="card">
+    <div class="face front">
+      <div class="front-top">
+        <span class="unit-tag" id="f-deck-tag"></span>
+        <span class="page-ref" id="f-page"></span>
+        <span id="grade-badge"></span>
+        <button class="btn-edit-card" onclick="openEditModal();event.stopPropagation()" title="Edit card">&#9998;</button>
+      </div>
+      <div id="f-name" class="card-title"></div>
+      <div id="f-ask-lbl" class="ask-lbl"></div>
+      <div id="f-asking" class="asking"></div>
+      <div class="hint">tap to reveal</div>
+    </div>
+    <div class="face back">
+      <div class="back-name" id="b-name"></div>
+      <div id="b-content"></div>
+      <div class="card-tag-area-wrap">
+        <div class="card-tag-area" id="card-tags"></div>
+      </div>
+    </div>
+  </div>
+  <!-- empty state inside scene -->
+  <div class="empty-state" id="empty-state">
+    <p>No cards match your current filters.</p>
+    <p style="font-size:.72rem">Try a different deck, tag, or search term.</p>
+  </div>
+</div>
+
+<!-- Navigation -->
+<div class="controls">
+  <button class="btn btn-s" id="prev-btn" onclick="prev()">&#8592; Prev</button>
+  <button class="btn btn-p" id="next-btn" onclick="next()">Next &#8594;</button>
+  <button class="btn btn-s" onclick="shuffle()">Shuffle</button>
+</div>
+
+<!-- Grade row -->
+<div class="grade-row" id="grade-row" style="display:none">
+  <button class="btn-grade btn-known" id="btn-known">Know it ✓</button>
+  <button class="btn-grade btn-learning" id="btn-learning">Still learning ↩</button>
+</div>
+
+<!-- Grade reset warning -->
+<div class="grade-reset-banner" id="grade-reset-banner" style="display:none">
+  <span>Remove this grade?</span>
+  <button onclick="confirmGradeReset()">Yes, remove</button>
+  <button onclick="cancelGradeReset()">Cancel</button>
+  <button class="suppress-btn" onclick="suppressAndReset()">Don't ask again</button>
+</div>
+
+<!-- Stats -->
+<div class="stats">
+  <div class="stat"><div class="sn" id="s-seen">0</div><div class="sl">Seen</div></div>
+  <div class="stat"><div class="sn" id="s-total">-</div><div class="sl">Total</div></div>
+  <div class="stat"><div class="sn sn--learning" id="s-learning">-</div><div class="sl">Learning</div></div>
+  <div class="stat"><div class="sn sn--known" id="s-known">-</div><div class="sl">Known</div></div>
+</div>
+<div class="reset-row">
+  <button class="btn-reset-all" onclick="resetAllGrades()">Reset all grades</button>
+</div>
+
+<!-- Tag Management Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeTagModal()"></div>
+<div class="modal" id="tag-modal" role="dialog" aria-modal="true" aria-label="Manage Tags">
+  <button class="modal-close" onclick="closeTagModal()" aria-label="Close">&times;</button>
+  <h2>Manage Tags</h2>
+
+  <div class="new-tag-form">
+    <input type="text" id="new-tag-input" placeholder="New tag name&hellip;" maxlength="30">
+    <div class="color-swatches" id="color-swatches"></div>
+    <button class="btn-create-tag" onclick="createTag()">+ Create</button>
+  </div>
+
+  <div class="tag-list" id="tag-list">
+    <div class="no-tags-placeholder" id="no-tags-msg">No tags yet. Create one above.</div>
+  </div>
+</div>
+
+<!-- Edit Card Modal -->
+<div class="modal-overlay" id="edit-overlay" onclick="closeEditModal()"></div>
+<div class="modal" id="edit-modal" role="dialog" aria-modal="true" aria-label="Edit Card">
+  <button class="modal-close" onclick="closeEditModal()" aria-label="Close">&times;</button>
+  <h2>Edit Card</h2>
+  <div id="edit-fields"></div>
+  <div id="edit-status" class="edit-status"></div>
+  <div class="edit-actions">
+    <button class="edit-btn-settings" onclick="openGHSettings()">&#9881; GitHub</button>
+    <button class="edit-btn-cancel"   onclick="closeEditModal()">Cancel</button>
+    <button class="edit-btn-submit"   onclick="submitCardEdit()">Submit as PR &#8594;</button>
+  </div>
+</div>
+
+<!-- GitHub Settings Modal -->
+<div class="modal-overlay" id="gh-overlay" onclick="closeGHSettings()"></div>
+<div class="modal" id="gh-modal" role="dialog" aria-modal="true" aria-label="GitHub Settings">
+  <button class="modal-close" onclick="closeGHSettings()" aria-label="Close">&times;</button>
+  <h2>GitHub Settings</h2>
+
+  <div class="gh-row">
+    <label class="gh-lbl">Owner</label>
+    <input type="text" id="gh-owner-input" placeholder="your-username" autocomplete="off">
+  </div>
+  <div class="gh-row">
+    <label class="gh-lbl">Repo</label>
+    <input type="text" id="gh-repo-input" placeholder="repo-name" autocomplete="off">
+  </div>
+  <button class="edit-btn-submit" style="margin-bottom:18px" onclick="saveGHRepo()">Save repo</button>
+
+  <hr class="gh-divider">
+
+  <p class="gh-section-title">Personal Access Token</p>
+  <div class="gh-row">
+    <input type="password" id="gh-pat-input" placeholder="ghp_&hellip;" autocomplete="off" style="flex:1">
+    <button class="edit-btn-submit" onclick="saveGHPat()">Save</button>
+    <button class="edit-btn-cancel" onclick="clearGHToken()">Clear</button>
+  </div>
+
+  <div id="gh-status" class="gh-status"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
