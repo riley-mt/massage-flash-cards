@@ -1,0 +1,5 @@
+token.txt
+*.token
+.claude/
+.DS_Store
+Thumbs.db

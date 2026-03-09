@@ -1,0 +1,42 @@
+[
+  {"unit":"BACK","name":"Back — Flexion","type":"movement","f1label":"Agonist","f1":"Rectus Abdominis, Internal Oblique, External Oblique","f2label":"Antagonist","f2":"Erector Spinae, Quadratus Lumborum"},
+  {"unit":"BACK","name":"Back — Extension","type":"movement","f1label":"Agonist","f1":"Erector Spinae, Quadratus Lumborum","f2label":"Antagonist","f2":"Rectus Abdominis, Internal Oblique, External Oblique"},
+  {"unit":"BACK","name":"Back — Right Lateral Flexion","type":"movement","f1label":"Agonist","f1":"(R) Erector Spinae, (R) Quadratus Lumborum, (R) Internal Oblique, (R) External Oblique","f2label":"Antagonist","f2":"(L) Erector Spinae, (L) Quadratus Lumborum, (L) Internal Oblique, (L) External Oblique"},
+  {"unit":"BACK","name":"Back — Left Lateral Flexion","type":"movement","f1label":"Agonist","f1":"(L) Erector Spinae, (L) Quadratus Lumborum, (L) Internal Oblique, (L) External Oblique","f2label":"Antagonist","f2":"(R) Erector Spinae, (R) Quadratus Lumborum, (R) Internal Oblique, (R) External Oblique"},
+  {"unit":"BACK","name":"Back — Right Rotation","type":"movement","f1label":"Agonist","f1":"(R) Internal Oblique + (L) External Oblique","f2label":"Antagonist","f2":"(L) Internal Oblique + (R) External Oblique"},
+  {"unit":"BACK","name":"Back — Left Rotation","type":"movement","f1label":"Agonist","f1":"(L) Internal Oblique + (R) External Oblique","f2label":"Antagonist","f2":"(R) Internal Oblique + (L) External Oblique"},
+
+  {"unit":"HIP","name":"Hip — Flexion","type":"movement","f1label":"Agonist","f1":"Iliopsoas, Tensor Fasciae Latae, Gluteus Medius, Adductors","f2label":"Antagonist","f2":"Gluteus Maximus, Gluteus Medius"},
+  {"unit":"HIP","name":"Hip — Extension","type":"movement","f1label":"Agonist","f1":"Gluteus Maximus, Gluteus Medius","f2label":"Antagonist","f2":"Iliopsoas, Tensor Fasciae Latae, Gluteus Medius, Adductors"},
+  {"unit":"HIP","name":"Hip — Abduction","type":"movement","f1label":"Agonist","f1":"Gluteus Medius, Tensor Fasciae Latae, Gluteus Maximus, Piriformis","f2label":"Antagonist","f2":"Gluteus Maximus (lower fibers), Adductors"},
+  {"unit":"HIP","name":"Hip — Adduction","type":"movement","f1label":"Agonist","f1":"Gluteus Maximus (lower fibers), Adductors","f2label":"Antagonist","f2":"Gluteus Medius, Tensor Fasciae Latae, Gluteus Maximus, Piriformis"},
+  {"unit":"HIP","name":"Hip — Lateral Rotation","type":"movement","f1label":"Agonist","f1":"Piriformis, Gluteus Maximus, Iliopsoas (assists), Gluteus Medius","f2label":"Antagonist","f2":"Tensor Fasciae Latae, Gluteus Medius"},
+  {"unit":"HIP","name":"Hip — Medial Rotation","type":"movement","f1label":"Agonist","f1":"Tensor Fasciae Latae, Gluteus Medius","f2label":"Antagonist","f2":"Piriformis, Gluteus Maximus, Iliopsoas, Gluteus Medius"},
+
+  {"unit":"WRIST","name":"Wrist — Flexion","type":"movement","f1label":"Agonist","f1":"Flexor Carpi Radialis","f2label":"Antagonist","f2":"Extensor Digitorum"},
+  {"unit":"WRIST","name":"Wrist — Extension","type":"movement","f1label":"Agonist","f1":"Extensor Digitorum","f2label":"Antagonist","f2":"Flexor Carpi Radialis"},
+  {"unit":"WRIST","name":"Wrist — Abduction","type":"movement","f1label":"Agonist","f1":"Flexor Carpi Radialis","f2label":"Antagonist","f2":"—"},
+  {"unit":"WRIST","name":"Wrist — Adduction","type":"movement","f1label":"Agonist","f1":"—","f2label":"Antagonist","f2":"Flexor Carpi Radialis"},
+
+  {"unit":"ANKLE","name":"Ankle — Dorsiflexion","type":"movement","f1label":"Agonist","f1":"Extensor Digitorum Longus","f2label":"Antagonist","f2":"Tibialis Posterior, Fibularis/Peroneus Longus"},
+  {"unit":"ANKLE","name":"Ankle — Plantarflexion","type":"movement","f1label":"Agonist","f1":"Tibialis Posterior, Fibularis/Peroneus Longus","f2label":"Antagonist","f2":"Extensor Digitorum Longus"},
+
+  {"unit":"FOOT","name":"Foot — Inversion","type":"movement","f1label":"Agonist","f1":"Tibialis Posterior","f2label":"Antagonist","f2":"Fibularis/Peroneus Longus, Extensor Digitorum Longus"},
+  {"unit":"FOOT","name":"Foot — Eversion","type":"movement","f1label":"Agonist","f1":"Fibularis/Peroneus Longus, Extensor Digitorum Longus","f2label":"Antagonist","f2":"Tibialis Posterior"},
+
+  {"unit":"LANDMARKS","name":"Process","type":"landmark","f1label":"Definition","f1":"A broad designation for any bump or projection on a bone.","f2label":"Example","f2":"mastoid process, xiphoid process, coracoid process"},
+  {"unit":"LANDMARKS","name":"Spine","type":"landmark","f1label":"Definition","f1":"An abrupt or pointed bony projection.","f2label":"Example","f2":"spine of the scapula, anterior superior iliac spine (ASIS)"},
+  {"unit":"LANDMARKS","name":"Trochanter","type":"landmark","f1label":"Definition","f1":"A large, blunt bony process.","f2label":"Example","f2":"greater and lesser trochanter of the femur"},
+  {"unit":"LANDMARKS","name":"Tubercle","type":"landmark","f1label":"Definition","f1":"A small rounded bump on a bone.","f2label":"Example","f2":"greater and lesser tubercles of the humerus"},
+  {"unit":"LANDMARKS","name":"Tuberosity","type":"landmark","f1label":"Definition","f1":"A large, often rough and irregular bump on a bone.","f2label":"Example","f2":"ischial tuberosity, radial tuberosity"},
+  {"unit":"LANDMARKS","name":"Line","type":"landmark","f1label":"Definition","f1":"A low ridge on a bone that doesn't stick up very far.","f2label":"Example","f2":"linea aspera of the femur"},
+  {"unit":"LANDMARKS","name":"Crest","type":"landmark","f1label":"Definition","f1":"A prominent, sharp ridge on a bone.","f2label":"Example","f2":"iliac crest, tibial crest"},
+  {"unit":"LANDMARKS","name":"Head","type":"landmark","f1label":"Definition","f1":"A large rounded end of a long bone, usually set off from the shaft by a narrower 'neck.'","f2label":"Example","f2":"head of the humerus, head of the femur"},
+  {"unit":"LANDMARKS","name":"Condyle","type":"landmark","f1label":"Definition","f1":"A rounded end of a long bone, usually NOT set off by a neck, and typically smaller than a head.","f2label":"Example","f2":"medial and lateral condyles of the femur"},
+  {"unit":"LANDMARKS","name":"Epicondyle","type":"landmark","f1label":"Definition","f1":"A bump located directly above (epi-) a condyle.","f2label":"Example","f2":"medial and lateral epicondyles of the humerus"},
+  {"unit":"LANDMARKS","name":"Facet","type":"landmark","f1label":"Definition","f1":"A smooth, mostly flat articular surface on a bone.","f2label":"Example","f2":"facets of the vertebrae"},
+  {"unit":"LANDMARKS","name":"Fossa","type":"landmark","f1label":"Definition","f1":"A basin-like depression or hollow in a bone.","f2label":"Example","f2":"supraspinous fossa, infraspinous fossa"},
+  {"unit":"LANDMARKS","name":"Foramen","type":"landmark","f1label":"Definition","f1":"A hole or opening through a bone (Latin for 'opening').","f2label":"Example","f2":"foramen magnum of the skull, foramina of the sacrum"},
+  {"unit":"LANDMARKS","name":"Notch","type":"landmark","f1label":"Definition","f1":"A deep indentation or cut-out in the edge of a bone.","f2label":"Example","f2":"sciatic notch, trochlear notch"},
+  {"unit":"LANDMARKS","name":"Angle","type":"landmark","f1label":"Definition","f1":"A point where two bony edges diverge from a common point.","f2label":"Example","f2":"superior and inferior angles of the scapula"}
+]

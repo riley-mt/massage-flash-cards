@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Muscles West</title>
+<link rel="stylesheet" href="muscles-west.css">
+</head>
+<body>
+<header>
+  <div class="eyebrow">Trail Guide to the Body</div>
+  <h1>Muscles <em>West</em></h1>
+  <p>Origins · Insertions · Actions — tap a card to reveal</p>
+</header>
+<div class="filters" id="filters">
+  <button class="filt active" data-unit="all">All (21)</button>
+  <button class="filt" data-unit="APK2W">Abdominals</button>
+  <button class="filt" data-unit="APK3W">Gluteals &amp; Hip</button>
+  <button class="filt f" data-unit="APK4W">Lower Leg &amp; Forearm</button>
+  <button class="filt f" data-unit="APK5W">Adductors</button>
+</div>
+<div class="modes" id="modes">
+  <button class="mode active" data-mode="all">Full Card</button>
+  <button class="mode" data-mode="origin">Quiz: Origin</button>
+  <button class="mode" data-mode="insertion">Quiz: Insertion</button>
+  <button class="mode" data-mode="action">Quiz: Action</button>
+</div>
+<div class="options-row">
+  <label class="toggle" id="flip-label">
+    <input type="checkbox" id="flip-toggle">
+    Start cards flipped (answer side up)
+  </label>
+</div>
+<div class="prog">
+  <div class="prog-info"><span id="prog-text">Loading...</span><span id="prog-pct"></span></div>
+  <div class="bar"><div class="fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+<div class="scene" id="scene" onclick="flipCard()">
+  <div class="card" id="card">
+    <div class="face front">
+      <div class="front-top">
+        <span class="unit-tag" id="f-unit"></span>
+        <span class="page-ref" id="f-page"></span>
+      </div>
+      <div>
+        <div class="muscle-name" id="f-name"></div>
+        <div class="ask-lbl">What is the:</div>
+        <div class="asking" id="f-asking"></div>
+      </div>
+      <div class="hint">tap to reveal answer</div>
+    </div>
+    <div class="face back">
+      <div class="back-name" id="b-name"></div>
+      <div id="b-content"></div>
+    </div>
+  </div>
+</div>
+<div class="controls">
+  <button class="btn btn-s" id="prev-btn" onclick="prev()">&#8592; Prev</button>
+  <button class="btn btn-p" id="next-btn" onclick="next()">Next &#8594;</button>
+  <button class="btn btn-s" onclick="shuffle()">Shuffle</button>
+</div>
+<div class="stats">
+  <div class="stat"><div class="sn" id="s-seen">0</div><div class="sl">Seen</div></div>
+  <div class="stat"><div class="sn" id="s-total">-</div><div class="sl">Total</div></div>
+  <div class="stat"><div class="sn" id="s-left">-</div><div class="sl">Left</div></div>
+</div>
+<script src="muscles-west.js"></script>
+</body>
+</html>
