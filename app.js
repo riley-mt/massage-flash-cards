@@ -941,17 +941,69 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Swipe support
-  let swipeStartX = 0, swipeStartY = 0;
+  let swipeStartX = 0, swipeStartY = 0, swipeLocked = false;
   const scene = document.getElementById('scene');
+
   scene.addEventListener('touchstart', e => {
     swipeStartX = e.touches[0].clientX;
     swipeStartY = e.touches[0].clientY;
+    swipeLocked = false;
+    scene.style.transition = 'none';
   }, { passive: true });
+
+  scene.addEventListener('touchmove', e => {
+    const dx = e.touches[0].clientX - swipeStartX;
+    const dy = e.touches[0].clientY - swipeStartY;
+    if (!swipeLocked) {
+      if (Math.abs(dx) > Math.abs(dy)) swipeLocked = 'h';
+      else if (Math.abs(dy) > Math.abs(dx)) swipeLocked = 'v';
+      else return;
+    }
+    if (swipeLocked === 'h') {
+      const drag = dx * 0.55;
+      const rot  = dx * 0.018;
+      scene.style.transform = `translateX(${drag}px) rotate(${rot}deg)`;
+    } else {
+      const drag = dy * 0.55;
+      scene.style.transform = `translateY(${drag}px)`;
+    }
+  }, { passive: true });
+
   scene.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - swipeStartX;
     const dy = e.changedTouches[0].clientY - swipeStartY;
-    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.5) return; // tap or vertical scroll
-    if (dx < 0) next(); else prev();
+
+    const snapBack = () => {
+      scene.style.transition = 'transform .3s cubic-bezier(.25,.8,.25,1)';
+      scene.style.transform = '';
+    };
+
+    if (!swipeLocked) { snapBack(); return; }
+
+    if (swipeLocked === 'h') {
+      if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.5) { snapBack(); return; }
+      const dir = dx < 0 ? -1 : 1;
+      scene.style.transition = 'transform .22s ease-in, opacity .22s ease-in';
+      scene.style.transform = `translateX(${dir * -110}%) rotate(${dir * -8}deg)`;
+      scene.style.opacity = '0';
+      setTimeout(() => {
+        scene.style.transition = 'none';
+        scene.style.transform = '';
+        scene.style.opacity = '';
+        if (dir === -1) next(); else prev();
+      }, 220);
+    } else {
+      if (Math.abs(dy) < 40 || Math.abs(dy) < Math.abs(dx) * 1.5) { snapBack(); return; }
+      scene.style.transition = 'transform .22s ease-in, opacity .22s ease-in';
+      scene.style.transform = `translateY(${dy < 0 ? -110 : 110}%)`;
+      scene.style.opacity = '0';
+      setTimeout(() => {
+        scene.style.transition = 'none';
+        scene.style.transform = '';
+        scene.style.opacity = '';
+        if (dy < 0) onKnown(); else onLearning();
+      }, 220);
+    }
   }, { passive: true });
 });
 
