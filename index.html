@@ -18,12 +18,12 @@
 
 <!-- Tier 1: Deck selector -->
 <div class="deck-selector" id="filter-deck">
-  <button class="dbtn active" data-deck="all">All</button>
-  <button class="dbtn d-anatomy"   data-deck="anatomy">Anatomy</button>
-  <button class="dbtn d-bones"     data-deck="bones">Bones</button>
-  <button class="dbtn d-pathology" data-deck="pathology">Pathology</button>
-  <button class="dbtn d-muscles"   data-deck="muscles">Muscles</button>
-  <button class="dbtn d-prime"     data-deck="prime-movers">Prime Movers</button>
+  <button class="dbtn active" data-deck="all" aria-pressed="true">All</button>
+  <button class="dbtn d-anatomy"   data-deck="anatomy"      aria-pressed="false">Anatomy</button>
+  <button class="dbtn d-bones"     data-deck="bones"        aria-pressed="false">Bones</button>
+  <button class="dbtn d-pathology" data-deck="pathology"    aria-pressed="false">Pathology</button>
+  <button class="dbtn d-muscles"   data-deck="muscles"      aria-pressed="false">Muscles</button>
+  <button class="dbtn d-prime"     data-deck="prime-movers" aria-pressed="false">Prime Movers</button>
 </div>
 
 <!-- Tier 2: Category chips -->
@@ -67,6 +67,9 @@
     <div class="fill" id="prog-fill" style="width:0%"></div>
   </div>
 </div>
+
+<!-- Screen reader live region -->
+<div id="sr-announce" class="sr-only" aria-live="assertive" aria-atomic="true"></div>
 
 <!-- Card -->
 <div class="scene" id="scene" onclick="flipCard()" role="button" tabindex="0"

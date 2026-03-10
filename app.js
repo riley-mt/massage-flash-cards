@@ -387,13 +387,14 @@ function updateModeButtons() {
 
   const el = document.getElementById('modes');
   el.innerHTML = modes.map(m =>
-    `<button class="mode${activeMode === m.key ? ' active' : ''}" data-mode="${m.key}">${m.label}</button>`
+    `<button class="mode${activeMode === m.key ? ' active' : ''}" data-mode="${m.key}" aria-pressed="${activeMode === m.key}">${m.label}</button>`
   ).join('');
 
   el.querySelectorAll('.mode').forEach(b => b.addEventListener('click', () => {
     activeMode = b.dataset.mode;
-    el.querySelectorAll('.mode').forEach(x => x.classList.remove('active'));
+    el.querySelectorAll('.mode').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-pressed', 'false'); });
     b.classList.add('active');
+    b.setAttribute('aria-pressed', 'true');
     const ctx = getModeContext();
     if (ctx) { modeMemory[ctx] = activeMode; saveModeMemory(); }
     if (deck.length) renderBack(deck[idx]);
@@ -420,6 +421,8 @@ function render() {
 
   flipped = startFlipped;
   document.getElementById('card').classList.toggle('flip', flipped);
+  setFaceAriaHidden(flipped);
+  announceCard(card, flipped);
   hideGradeButtons();
   seen.add(idx);
   updateProgress();
@@ -579,6 +582,7 @@ function updateProgress() {
   document.getElementById('prog-text').textContent = t ? 'Card ' + (idx + 1) + ' of ' + t : 'No cards';
   document.getElementById('prog-pct').textContent = t ? p + '%' : '';
   document.getElementById('prog-fill').style.width = p + '%';
+  document.querySelector('[role="progressbar"]')?.setAttribute('aria-valuenow', p);
   document.getElementById('s-seen').textContent = seen.size;
   document.getElementById('s-total').textContent = t || 0;
   document.getElementById('prev-btn').disabled = idx === 0 || !t;
@@ -608,8 +612,27 @@ function flipCard() {
   if (!deck.length) return;
   flipped = !flipped;
   document.getElementById('card').classList.toggle('flip', flipped);
-  if (flipped) showGradeButtons();
+  setFaceAriaHidden(flipped);
+  if (flipped) { showGradeButtons(); announceCard(deck[idx], true); }
+  else announceCard(deck[idx], false);
   closeOpenDropdown();
+}
+
+function setFaceAriaHidden(isFlipped) {
+  document.querySelector('.face.front').setAttribute('aria-hidden', String(isFlipped));
+  document.querySelector('.face.back').setAttribute('aria-hidden',  String(!isFlipped));
+}
+
+function announceCard(card, isBack) {
+  const el = document.getElementById('sr-announce');
+  if (!el) return;
+  if (isBack) {
+    const fields = card.fields.map(f => (f.label ? f.label + ': ' : '') + f.value).join('. ');
+    el.textContent = 'Answer: ' + fields;
+  } else {
+    el.textContent = 'Card ' + (idx + 1) + ' of ' + deck.length + '. ' + card.title +
+      (card.subtitle ? '. ' + card.subtitle : '');
+  }
 }
 
 function showGradeButtons() { document.getElementById('grade-row').style.display = 'flex'; }
@@ -852,8 +875,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('filter-deck').addEventListener('click', e => {
     const btn = e.target.closest('.dbtn');
     if (!btn) return;
-    document.querySelectorAll('.dbtn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.dbtn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
     btn.classList.add('active');
+    btn.setAttribute('aria-pressed', 'true');
     state.deck = btn.dataset.deck;
     state.category = 'all';
     applyFilter();

@@ -1,5 +1,9 @@
 /* app.css — extends muscles-west.css for the unified study app */
 
+/* ── Screen-reader only utility ──────────────────────────────── */
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0 }
+
 /* ── Header ──────────────────────────────────────────────────── */
 .app-subtitle { font-size: .72rem; color: #7a8090; margin-top: 4px; letter-spacing: .5px }
 
