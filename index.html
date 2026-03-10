@@ -180,7 +180,14 @@
     <button class="edit-btn-submit" onclick="saveGHPat()">Save</button>
     <button class="edit-btn-cancel" onclick="clearGHToken()">Clear</button>
   </div>
+  <div class="gh-row" style="margin-top:6px">
+    <label class="gh-file-label">
+      Load from file&hellip;
+      <input type="file" id="gh-token-file" accept=".txt,.token,text/plain" style="display:none" onchange="loadTokenFromFile(event)">
+    </label>
+  </div>
 
+  <div id="gh-save-status" class="gh-save-status" style="display:none"></div>
   <div id="gh-status" class="gh-status"></div>
 </div>
 

@@ -138,6 +138,7 @@ const SOURCES = [
 ];
 
 async function loadAll() {
+  const initialHash = location.hash;
   const failed = [];
   const results = await Promise.all(
     SOURCES.map(({ url, mapper }) =>
@@ -162,11 +163,11 @@ async function loadAll() {
   updateLearningCount();
   initColorSwatches();
   applyFilter();
-  jumpToHash();
+  jumpToHash(initialHash);
 }
 
-function jumpToHash() {
-  const raw = location.hash.slice(1);
+function jumpToHash(hash = location.hash) {
+  const raw = hash.slice(1);
   if (!raw) return;
   const wantsFlipped = raw.endsWith(':flipped');
   const id = wantsFlipped ? raw.slice(0, -8) : raw;
@@ -840,6 +841,8 @@ function deleteTag(tagId) {
 // EVENT LISTENERS
 // ════════════════════════════════════════════════════════════════
 
+window.addEventListener('hashchange', () => jumpToHash());
+
 document.addEventListener('DOMContentLoaded', () => {
   loadAll();
 
@@ -1082,17 +1085,35 @@ function closeGHSettings() {
 function saveGHRepo() {
   const owner = document.getElementById('gh-owner-input').value.trim();
   const repo  = document.getElementById('gh-repo-input').value.trim();
-  if (owner) localStorage.setItem('msc_gh_owner', owner);
-  if (repo)  localStorage.setItem('msc_gh_repo',  repo);
+  if (!owner || !repo) { setGHSettingsStatus('error', 'Both owner and repo are required.'); return; }
+  localStorage.setItem('msc_gh_owner', owner);
+  localStorage.setItem('msc_gh_repo',  repo);
   updateGHStatus();
+  setGHSettingsStatus('ok', 'Repo saved.');
+}
+
+let ghSaveStatusTimer = null;
+function setGHSettingsStatus(type, msg) {
+  const el = document.getElementById('gh-save-status');
+  if (!el) return;
+  el.className = 'gh-save-status gh-save-status--' + type;
+  el.textContent = msg;
+  el.style.display = 'block';
+  clearTimeout(ghSaveStatusTimer);
+  ghSaveStatusTimer = setTimeout(() => { el.style.display = 'none'; }, 3000);
 }
 
 function saveGHPat() {
-  const tok = document.getElementById('gh-pat-input').value.trim() 
-  || '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';
-  
-  if (tok && tok !== '\u25cf'.repeat(12)) localStorage.setItem('msc_gh_token', tok);
+  const tok = document.getElementById('gh-pat-input').value.trim();
+  if (!tok || tok === '\u25cf'.repeat(12)) {
+    setGHSettingsStatus('error', 'Paste a token first.');
+    return;
+  }
+  localStorage.setItem('msc_gh_token', tok);
+  document.getElementById('gh-pat-input').value = '\u25cf'.repeat(12);
+  document.getElementById('gh-pat-input').dataset.masked = 'true';
   updateGHStatus();
+  setGHSettingsStatus('ok', 'Token saved.');
 }
 
 function clearGHToken() {
@@ -1100,6 +1121,23 @@ function clearGHToken() {
   document.getElementById('gh-pat-input').value = '';
   document.getElementById('gh-pat-input').dataset.masked = 'false';
   updateGHStatus();
+}
+
+function loadTokenFromFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const tok = ev.target.result.trim();
+    if (!tok) { setGHSettingsStatus('error', 'File is empty.'); return; }
+    localStorage.setItem('msc_gh_token', tok);
+    document.getElementById('gh-pat-input').value = '\u25cf'.repeat(12);
+    document.getElementById('gh-pat-input').dataset.masked = 'true';
+    document.getElementById('gh-token-file').value = '';
+    updateGHStatus();
+    setGHSettingsStatus('ok', 'Token loaded from file.');
+  };
+  reader.readAsText(file);
 }
 
 function updateGHStatus() {
