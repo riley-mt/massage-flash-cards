@@ -35,8 +35,8 @@ const DECK_COLORS = {
 const TAG_SWATCHES = ['#b85c4a','#4a7c8a','#7a5c9e','#c9a84c','#4a8a5c','#7a8090'];
 
 const GH = {
-  get owner()   { return localStorage.getItem('msc_gh_owner') || ''; },
-  get repo()    { return localStorage.getItem('msc_gh_repo')  || ''; },
+  get owner()   { return localStorage.getItem('msc_gh_owner') || 'riley-mt'; },
+  get repo()    { return localStorage.getItem('msc_gh_repo')  || 'massage-flash-cards'; },
   get token()   { return localStorage.getItem('msc_gh_token') || ''; },
   base: 'main'
 };
