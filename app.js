@@ -463,6 +463,8 @@ function renderGradeBadge(id) {
   if (g?.status === 'known')    { el.className = 'badge--known';    el.textContent = '✓ Known'; }
   else if (g?.status === 'learning') { el.className = 'badge--learning'; el.textContent = '↩ Learning'; }
   else el.textContent = '';
+  document.getElementById('btn-known').setAttribute('aria-pressed',    String(g?.status === 'known'));
+  document.getElementById('btn-learning').setAttribute('aria-pressed', String(g?.status === 'learning'));
 }
 
 function renderBack(card) {
@@ -913,6 +915,20 @@ document.addEventListener('DOMContentLoaded', () => {
     else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prev();
     else if (e.key === ' ') { e.preventDefault(); flipCard(); }
   });
+
+  // Swipe support
+  let swipeStartX = 0, swipeStartY = 0;
+  const scene = document.getElementById('scene');
+  scene.addEventListener('touchstart', e => {
+    swipeStartX = e.touches[0].clientX;
+    swipeStartY = e.touches[0].clientY;
+  }, { passive: true });
+  scene.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - swipeStartX;
+    const dy = e.changedTouches[0].clientY - swipeStartY;
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.5) return; // tap or vertical scroll
+    if (dx < 0) next(); else prev();
+  }, { passive: true });
 });
 
 // ════════════════════════════════════════════════════════════════

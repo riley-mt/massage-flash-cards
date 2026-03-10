@@ -201,6 +201,8 @@
 .gh-row input:focus { border-color:rgba(255,255,255,.28) }
 .gh-divider { border:none; border-top:1px solid rgba(255,255,255,.08); margin:16px 0 }
 .gh-section-title { font-size:.72rem; font-weight:600; color:#aab0be; margin:0 0 8px; letter-spacing:.3px }
+.gh-help-link { color:#7aa2f7; text-decoration:none; font-weight:400 }
+.gh-help-link:hover { text-decoration:underline }
 .gh-hint { font-size:.68rem; color:#7a8090; margin:0 0 10px; line-height:1.5 }
 .gh-device-panel { margin-top:12px; padding:12px; background:rgba(255,255,255,.04);
   border-radius:10px; border:1px solid rgba(255,255,255,.08) }
