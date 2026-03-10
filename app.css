@@ -4,8 +4,33 @@
 .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px;
   overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0 }
 
+/* ── Skip link (visible on focus for keyboard users) ─────────── */
+.skip-link { position:absolute; top:-100%; left:8px; z-index:9999;
+  padding:8px 16px; background:#2a2535; color:#f0ebe0; border-radius:6px;
+  text-decoration:none; font-size:.85rem; border:1px solid rgba(255,255,255,.2) }
+.skip-link:focus { top:8px }
+
 /* ── Header ──────────────────────────────────────────────────── */
 .app-subtitle { font-size: .72rem; color: #7a8090; margin-top: 4px; letter-spacing: .5px }
+
+header { position: relative }
+.btn-help { position:absolute; top:12px; right:12px; width:28px; height:28px; border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.2); background:rgba(255,255,255,.07); color:#aab0be;
+  font-size:.85rem; font-weight:700; cursor:pointer; line-height:1; transition:all .18s }
+.btn-help:hover { background:rgba(255,255,255,.15); color:#f0ebe0; border-color:rgba(255,255,255,.4) }
+
+/* ── Help modal ──────────────────────────────────────────────── */
+.help-sections { display:grid; grid-template-columns:1fr 1fr; gap:14px 20px; margin:14px 0 }
+@media (max-width:520px) { .help-sections { grid-template-columns:1fr } }
+.help-section h3 { font-size:.65rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+  color:#7a8090; margin:0 0 7px }
+.help-section ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:5px }
+.help-section li { font-size:.78rem; color:#c0c8d8; line-height:1.4 }
+.help-key { display:inline-block; padding:1px 6px; border-radius:4px;
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15);
+  font-family:monospace; font-size:.72rem; color:#f0ebe0; white-space:nowrap }
+.help-footer { display:flex; align-items:center; justify-content:flex-end;
+  margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,.08) }
 
 /* ── Deck Selector (Tier 1) ─────────────────────────────────── */
 .deck-selector { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:10px }

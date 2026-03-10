@@ -8,16 +8,18 @@
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
+<a href="#flip-btn" class="skip-link">Skip to card</a>
 <header>
   <div class="eyebrow">Massage School</div>
   <h1>Study <em>Cards</em></h1>
   <p class="app-subtitle">Flashcards &middot; Muscles &middot; Prime Movers &mdash; tap a card to reveal</p>
+  <button class="btn-help" onclick="openHelpModal()" aria-label="Help — how to use this app">?</button>
 </header>
 
 <div id="warn-banner" class="warn-banner" style="display:none"></div>
 
 <!-- Tier 1: Deck selector -->
-<div class="deck-selector" id="filter-deck">
+<div class="deck-selector" id="filter-deck" role="group" aria-label="Select deck">
   <button class="dbtn active" data-deck="all" aria-pressed="true">All</button>
   <button class="dbtn d-anatomy"   data-deck="anatomy"      aria-pressed="false">Anatomy</button>
   <button class="dbtn d-bones"     data-deck="bones"        aria-pressed="false">Bones</button>
@@ -41,7 +43,7 @@
 </div>
 
 <!-- Quiz modes -->
-<div class="modes" id="modes">
+<div class="modes" id="modes" role="group" aria-label="Quiz mode">
   <button class="mode active" data-mode="all">Full Card</button>
 </div>
 
@@ -72,15 +74,13 @@
 <div id="sr-announce" class="sr-only" aria-live="assertive" aria-atomic="true"></div>
 
 <!-- Card -->
-<div class="scene" id="scene" onclick="flipCard()" role="button" tabindex="0"
-     aria-label="Flashcard — tap or press Space to flip"
-     onkeydown="if(event.key===' '||event.key==='Enter'){event.preventDefault();flipCard();}">
-  <div class="card" id="card" aria-live="polite" aria-atomic="true">
+<div class="scene" id="scene" onclick="flipCard()">
+  <div class="card" id="card">
     <div class="face front">
       <div class="front-top">
         <span class="unit-tag" id="f-deck-tag"></span>
         <span class="page-ref" id="f-page"></span>
-        <span id="grade-badge" aria-live="polite"></span>
+        <span id="grade-badge"></span>
         <button class="btn-edit-card" onclick="openEditModal();event.stopPropagation()" aria-label="Edit this card">&#9998;</button>
       </div>
       <div id="f-name" class="card-title"></div>
@@ -102,6 +102,9 @@
     <p style="font-size:.72rem">Try a different deck, tag, or search term.</p>
   </div>
 </div>
+
+<!-- Accessible flip button (screen readers / keyboard) -->
+<button class="sr-only" id="flip-btn" onclick="flipCard()">Flip card — reveal answer</button>
 
 <!-- Navigation -->
 <div class="controls">
@@ -199,6 +202,53 @@
 
   <div id="gh-save-status" class="gh-save-status" style="display:none"></div>
   <div id="gh-status" class="gh-status"></div>
+</div>
+
+<!-- Help / Tutorial Modal -->
+<div class="modal-overlay" id="help-overlay" onclick="closeHelpModal()"></div>
+<div class="modal" id="help-modal" role="dialog" aria-modal="true" aria-label="How to use Study Cards">
+  <button class="modal-close" onclick="closeHelpModal()" aria-label="Close">&times;</button>
+  <h2>How to use Study Cards</h2>
+  <div class="help-sections">
+    <div class="help-section">
+      <h3>Navigating</h3>
+      <ul>
+        <li><span class="help-key">Tap card</span> flip to reveal the answer</li>
+        <li><span class="help-key">Swipe left</span> next card</li>
+        <li><span class="help-key">Swipe right</span> previous card</li>
+        <li><span class="help-key">&#8592; &#8594;</span> arrow keys or Prev / Next buttons</li>
+        <li><span class="help-key">Space</span> flip card (keyboard)</li>
+      </ul>
+    </div>
+    <div class="help-section">
+      <h3>Grading</h3>
+      <ul>
+        <li><span class="help-key">Know it ✓</span> marks learned, advances to next card</li>
+        <li><span class="help-key">Still learning ↩</span> marks for review</li>
+        <li><span class="help-key">Swipe up</span> Know it &nbsp;<span class="help-key">Swipe down</span> Still learning</li>
+        <li>Enable <strong>Still Learning only</strong> to drill unmastered cards</li>
+      </ul>
+    </div>
+    <div class="help-section">
+      <h3>Decks &amp; Modes</h3>
+      <ul>
+        <li>Choose a <strong>deck</strong> at the top to filter by subject</li>
+        <li><strong>Quiz: Origin / Insertion / Action</strong> reveals one field at a time</li>
+        <li><strong>Start cards flipped</strong> — quiz yourself from the answer side</li>
+      </ul>
+    </div>
+    <div class="help-section">
+      <h3>Editing cards</h3>
+      <ul>
+        <li>Tap <strong>✏</strong> on any card to suggest a correction</li>
+        <li>Requires a GitHub account &amp; Personal Access Token</li>
+        <li>Changes open a Pull Request — nothing changes without review</li>
+      </ul>
+    </div>
+  </div>
+  <div class="help-footer">
+    <button class="edit-btn-submit" onclick="closeHelpModal()">Got it</button>
+  </div>
 </div>
 
 <script src="app.js"></script>

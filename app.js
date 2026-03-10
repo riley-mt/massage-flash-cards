@@ -423,6 +423,8 @@ function render() {
   document.getElementById('card').classList.toggle('flip', flipped);
   setFaceAriaHidden(flipped);
   announceCard(card, flipped);
+  const flipBtn = document.getElementById('flip-btn');
+  if (flipBtn) flipBtn.textContent = flipped ? 'Flip back to question' : 'Flip card — reveal answer';
   hideGradeButtons();
   seen.add(idx);
   updateProgress();
@@ -454,6 +456,9 @@ function renderFront(card) {
       : (card.fields.find(f => f.key === activeMode)?.label || '');
     document.getElementById('f-asking').textContent = modeLabel;
   }
+
+  // Edit button label
+  document.querySelector('.btn-edit-card')?.setAttribute('aria-label', 'Edit this card');
 
   // Grade badge
   renderGradeBadge(card.id);
@@ -615,6 +620,8 @@ function flipCard() {
   setFaceAriaHidden(flipped);
   if (flipped) { showGradeButtons(); announceCard(deck[idx], true); }
   else announceCard(deck[idx], false);
+  const flipBtn = document.getElementById('flip-btn');
+  if (flipBtn) flipBtn.textContent = flipped ? 'Flip back to question' : 'Flip card — reveal answer';
   closeOpenDropdown();
 }
 
@@ -740,6 +747,7 @@ function initColorSwatches() {
     s.className = 'swatch' + (i === 0 ? ' selected' : '');
     s.style.background = color;
     s.title = color;
+    s.setAttribute('aria-label', 'Tag color ' + (i + 1) + ': ' + color);
     s.addEventListener('click', () => {
       document.querySelectorAll('.swatch').forEach(x => x.classList.remove('selected'));
       s.classList.add('selected');
@@ -868,8 +876,24 @@ function deleteTag(tagId) {
 
 window.addEventListener('hashchange', () => jumpToHash());
 
+// ════════════════════════════════════════════════════════════════
+// HELP MODAL
+// ════════════════════════════════════════════════════════════════
+
+function openHelpModal() {
+  document.getElementById('help-modal').classList.add('open');
+  document.getElementById('help-overlay').classList.add('open');
+}
+
+function closeHelpModal() {
+  localStorage.setItem('msc_help_seen', '1');
+  document.getElementById('help-modal').classList.remove('open');
+  document.getElementById('help-overlay').classList.remove('open');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   loadAll();
+  if (!localStorage.getItem('msc_help_seen')) openHelpModal();
 
   // Deck selector
   document.getElementById('filter-deck').addEventListener('click', e => {
