@@ -397,7 +397,7 @@ function updateModeButtons() {
     b.setAttribute('aria-pressed', 'true');
     const ctx = getModeContext();
     if (ctx) { modeMemory[ctx] = activeMode; saveModeMemory(); }
-    if (deck.length) renderBack(deck[idx]);
+    if (deck.length) { renderFront(deck[idx]); renderBack(deck[idx]); }
   }));
 }
 
@@ -426,6 +426,7 @@ function render() {
   const flipBtn = document.getElementById('flip-btn');
   if (flipBtn) flipBtn.textContent = flipped ? 'Flip back to question' : 'Flip card — reveal answer';
   hideGradeButtons();
+  updateHintVisibility();
   seen.add(idx);
   updateProgress();
   history.replaceState(null, '', '#' + card.id + (startFlipped ? ':flipped' : ''));
@@ -476,7 +477,12 @@ function renderGradeBadge(id) {
 }
 
 function renderBack(card) {
-  document.getElementById('b-name').textContent = card.title;
+  const bTagEl = document.getElementById('b-deck-tag');
+  if (bTagEl) {
+    bTagEl.textContent = FC_DECKS[card.deck] || card.meta.categoryLabel || card.deck;
+    bTagEl.style.background = card.meta.isFascia ? '#4a7c8a' : DECK_COLORS[card.deck] || '#b85c4a';
+  }
+  document.getElementById('b-page').textContent = card.meta.pageRef || '';
   document.getElementById('b-content').innerHTML = buildBackContent(card, activeMode);
 }
 
@@ -511,7 +517,6 @@ function escHtml(str) {
 // ════════════════════════════════════════════════════════════════
 
 function renderCardTags(card) {
-  const el = document.getElementById('card-tags');
   const assigned = (tagAssignments[card.id] || [])
     .map(tid => tags.find(t => t.id === tid))
     .filter(Boolean);
@@ -525,7 +530,8 @@ function renderCardTags(card) {
   });
   html += `<button class="btn-add-tag" onclick="openTagDropdown(event,'${card.id}')">+ Tag</button>`;
   html += '</div>';
-  el.innerHTML = html;
+  document.getElementById('card-tags-front').innerHTML = html;
+  document.getElementById('card-tags-back').innerHTML  = html;
 }
 
 function removeTagFromCard(cardId, tagId) {
@@ -644,6 +650,13 @@ function announceCard(card, isBack) {
 
 function showGradeButtons() { document.getElementById('grade-row').style.display = 'flex'; }
 function hideGradeButtons() { document.getElementById('grade-row').style.display = 'none'; }
+
+function updateHintVisibility() {
+  const hf = document.getElementById('hint-front');
+  const hb = document.getElementById('hint-back');
+  if (hf) hf.style.visibility = startFlipped ? 'hidden' : '';
+  if (hb) hb.style.visibility = startFlipped ? '' : 'hidden';
+}
 
 function next() {
   if (idx < deck.length - 1) { idx++; render(); }
@@ -929,6 +942,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (flipped) showGradeButtons(); else hideGradeButtons();
     // Switch active grade set — refresh badge and stats immediately
     if (deck.length) renderGradeBadge(deck[idx].id);
+    updateHintVisibility();
     updateLearningCount();
     refreshKnownLearningStat();
   });

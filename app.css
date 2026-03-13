@@ -32,6 +32,21 @@ header { position: relative }
 .help-footer { display:flex; align-items:center; justify-content:flex-end;
   margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,.08) }
 
+/* ── Card face overrides ─────────────────────────────────────── */
+/* Dim front from pure white to warm off-white */
+.front { background: #e8e2d8; }
+/* Soften the hint divider on the off-white background */
+.front .hint { border-top-color: #cdc8be; color: #8a8680; }
+/* Both top rows: truly center the page-ref, push right items to edge */
+.front-top { position:relative; justify-content:flex-start; margin-bottom:12px; }
+.back-top  { position:relative; display:flex; align-items:center; margin-bottom:12px; }
+.front-top .page-ref,
+.back-top  .page-ref { position:absolute; left:50%; transform:translateX(-50%); pointer-events:none; }
+.front-top #grade-badge { margin-left:auto; }
+.back-top  .btn-edit-card { margin-left:auto; }
+/* Fix hint border/color on dark back face */
+.back .hint { border-top-color: rgba(255,255,255,.08); color: #7a8090; }
+
 /* ── Deck Selector (Tier 1) ─────────────────────────────────── */
 .deck-selector { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:10px }
 .dbtn { padding:6px 16px; border-radius:100px; border:2px solid rgba(255,255,255,.15);
@@ -94,8 +109,15 @@ header { position: relative }
 .sn.sn--known    { color:#22c55e }
 .sn.sn--learning { color:#f59e0b }
 
-/* ── Card tag area (back face) ───────────────────────────────── */
-.card-tag-area { margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,.08) }
+/* ── Card bottom bar (tag + hint share one divider) ─────────── */
+.card-bottom { margin-top:auto; position:relative;
+  border-top:1px solid rgba(255,255,255,.08); padding-top:10px;
+  display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.front .card-bottom { border-top-color: rgba(0,0,0,.12); }
+/* hint lives inside card-bottom now — no extra margin/border needed */
+.hint { margin-top:0 !important; border:none !important; padding-top:0 !important;
+  position:absolute; left:50%; transform:translateX(-50%); pointer-events:none; }
+.card-tag-area { flex:1; min-width:0; }
 .card-tag-area-inner { display:flex; flex-wrap:wrap; gap:5px; align-items:center }
 .card-tag-pill { display:inline-flex; align-items:center; gap:4px; padding:3px 9px;
   border-radius:100px; font-size:.64rem; font-weight:600; border:1.5px solid; color:#1a1f2e }
@@ -105,6 +127,9 @@ header { position: relative }
 .btn-add-tag { padding:3px 10px; border-radius:100px; border:1px dashed rgba(255,255,255,.25);
   background:transparent; color:#7a8090; font-size:.64rem; cursor:pointer; font-family:Georgia,serif }
 .btn-add-tag:hover { border-color:rgba(255,255,255,.45); color:#aab0be }
+/* Front face: fix near-invisible colors on light background */
+.front .btn-add-tag { border-color:rgba(0,0,0,.25); color:#7a8090 }
+.front .btn-add-tag:hover { border-color:rgba(0,0,0,.45); color:#3a4050 }
 .tag-assign-dropdown { position:absolute; background:#252b3b; border:1px solid rgba(255,255,255,.15);
   border-radius:10px; padding:6px; z-index:100; box-shadow:0 8px 24px rgba(0,0,0,.5);
   display:flex; flex-direction:column; gap:3px; min-width:140px }
@@ -112,7 +137,6 @@ header { position: relative }
   font-size:.72rem; padding:5px 9px; border-radius:6px; cursor:pointer; font-family:Georgia,serif }
 .tag-assign-dropdown button:hover { background:rgba(255,255,255,.08) }
 .tag-assign-dropdown .no-tags-msg { color:#7a8090; font-size:.7rem; padding:5px 9px }
-.card-tag-area-wrap { position:relative }
 
 /* ── Tag Management Modal ────────────────────────────────────── */
 .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:200; display:none }

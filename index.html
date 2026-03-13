@@ -86,13 +86,21 @@
       <div id="f-name" class="card-title"></div>
       <div id="f-ask-lbl" class="ask-lbl"></div>
       <div id="f-asking" class="asking"></div>
-      <div class="hint" aria-hidden="true">tap to reveal</div>
+      <div class="card-bottom">
+        <div class="card-tag-area" id="card-tags-front"></div>
+        <div class="hint" id="hint-front" aria-hidden="true">tap to reveal</div>
+      </div>
     </div>
     <div class="face back">
-      <div class="back-name" id="b-name"></div>
+      <div class="back-top">
+        <span class="unit-tag" id="b-deck-tag"></span>
+        <span class="page-ref" id="b-page"></span>
+        <button class="btn-edit-card" onclick="openEditModal();event.stopPropagation()" aria-label="Edit this card">&#9998;</button>
+      </div>
       <div id="b-content"></div>
-      <div class="card-tag-area-wrap">
-        <div class="card-tag-area" id="card-tags"></div>
+      <div class="card-bottom">
+        <div class="card-tag-area" id="card-tags-back"></div>
+        <div class="hint" id="hint-back" aria-hidden="true" style="visibility:hidden">tap to reveal</div>
       </div>
     </div>
   </div>
