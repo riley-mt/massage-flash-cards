@@ -137,6 +137,12 @@ const SOURCES = [
   { url: 'prime-movers-data.json', mapper: mapPrimeMover }
 ];
 
+function setUrl(deckId, cardId, flipped) {
+  const params = deckId && deckId !== 'all' ? '?deck=' + encodeURIComponent(deckId) : '';
+  const hash   = cardId ? '#' + cardId + (flipped ? ':flipped' : '') : '';
+  history.replaceState(null, '', location.pathname + params + hash);
+}
+
 async function loadAll() {
   const initialHash = location.hash;
   const failed = [];
@@ -169,6 +175,7 @@ async function loadAll() {
 function jumpToHash(hash = location.hash) {
   const raw = hash.slice(1);
   if (!raw) return;
+
   const wantsFlipped = raw.endsWith(':flipped');
   const id = wantsFlipped ? raw.slice(0, -8) : raw;
   if (!id) return;
@@ -425,11 +432,11 @@ function render() {
   announceCard(card, flipped);
   const flipBtn = document.getElementById('flip-btn');
   if (flipBtn) flipBtn.textContent = flipped ? 'Flip back to question' : 'Flip card — reveal answer';
-  hideGradeButtons();
+  if (startFlipped) showGradeButtons(); else hideGradeButtons();
   updateHintVisibility();
   seen.add(idx);
   updateProgress();
-  history.replaceState(null, '', '#' + card.id + (startFlipped ? ':flipped' : ''));
+  setUrl(state.deck, card.id, startFlipped);
 }
 
 function renderFront(card) {
@@ -599,20 +606,48 @@ function updateProgress() {
   document.getElementById('prev-btn').disabled = idx === 0 || !t;
   document.getElementById('next-btn').disabled = idx >= t - 1 || !t;
   refreshKnownLearningStat();
+  updateLearningCount();
+}
+
+function slashBase() {
+  // When a category is active, the slash-total is the parent deck; otherwise ALL.
+  if (state.category !== 'all' && state.deck !== 'all') {
+    return ALL.filter(c => c.deck === state.deck);
+  }
+  return ALL;
 }
 
 function refreshKnownLearningStat() {
   const ag = activeGrades();
-  const known    = deck.filter(c => ag[c.id]?.status === 'known').length;
-  const learning = deck.filter(c => ag[c.id]?.status === 'learning').length;
-  document.getElementById('s-known').textContent    = known;
-  document.getElementById('s-learning').textContent = learning;
+  const isFiltered = state.deck !== 'all' || state.category !== 'all' || state.tag || state.search.trim();
+  const base = slashBase();
+
+  const dLearning = deck.filter(c => ag[c.id]?.status === 'learning').length;
+  const dKnown    = deck.filter(c => ag[c.id]?.status === 'known').length;
+  const aLearning = base.filter(c => ag[c.id]?.status === 'learning').length;
+  const aKnown    = base.filter(c => ag[c.id]?.status === 'known').length;
+
+  const fmt = (group, all) => isFiltered
+    ? `${group}<span class="sn-all"> / ${all}</span>`
+    : String(all);
+
+  document.getElementById('s-learning').innerHTML = fmt(dLearning, aLearning);
+  document.getElementById('s-known').innerHTML    = fmt(dKnown,    aKnown);
 }
 
 function updateLearningCount() {
   const ag = activeGrades();
-  const count = ALL.filter(c => ag[c.id]?.status === 'learning' || !ag[c.id]).length;
-  document.getElementById('learning-count').textContent = count;
+  const notKnown = c => ag[c.id]?.status === 'learning' || !ag[c.id];
+  const isFiltered = state.deck !== 'all' || state.category !== 'all' || state.tag || state.search.trim();
+  const base = slashBase();
+  const el = document.getElementById('learning-count');
+  if (isFiltered) {
+    const groupCount = deck.filter(notKnown).length;
+    const baseCount  = base.filter(notKnown).length;
+    el.innerHTML = `${groupCount}<span class="sn-all"> / ${baseCount}</span>`;
+  } else {
+    el.textContent = base.filter(notKnown).length;
+  }
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -624,7 +659,8 @@ function flipCard() {
   flipped = !flipped;
   document.getElementById('card').classList.toggle('flip', flipped);
   setFaceAriaHidden(flipped);
-  if (flipped) { showGradeButtons(); announceCard(deck[idx], true); }
+  showGradeButtons();
+  if (flipped) { announceCard(deck[idx], true); }
   else announceCard(deck[idx], false);
   const flipBtn = document.getElementById('flip-btn');
   if (flipBtn) flipBtn.textContent = flipped ? 'Flip back to question' : 'Flip card — reveal answer';
@@ -648,14 +684,27 @@ function announceCard(card, isBack) {
   }
 }
 
-function showGradeButtons() { document.getElementById('grade-row').style.display = 'flex'; }
-function hideGradeButtons() { document.getElementById('grade-row').style.display = 'none'; }
+function showGradeButtons() { document.getElementById('grade-row').style.visibility = 'visible'; }
+function hideGradeButtons() { document.getElementById('grade-row').style.visibility = 'hidden'; }
 
 function updateHintVisibility() {
   const hf = document.getElementById('hint-front');
   const hb = document.getElementById('hint-back');
   if (hf) hf.style.visibility = startFlipped ? 'hidden' : '';
   if (hb) hb.style.visibility = startFlipped ? '' : 'hidden';
+}
+
+function nextUngraded() {
+  const ag = activeGrades();
+  const n = deck.length;
+  // 1. next unmarked card (wrapping)
+  for (let i = 1; i < n; i++) {
+    const j = (idx + i) % n;
+    if (!ag[deck[j].id]?.status) { idx = j; render(); return; }
+  }
+  // 2. fall back to first still-learning card
+  const fi = deck.findIndex(c => ag[c.id]?.status === 'learning');
+  if (fi !== -1 && fi !== idx) { idx = fi; render(); }
 }
 
 function next() {
@@ -692,7 +741,7 @@ function onKnown() {
   if (activeGrades()[card.id]?.status === 'known') { initiateGradeReset(card.id); return; }
   saveGrade(card.id, 'known');
   hideGradeButtons();
-  setTimeout(() => { if (idx < deck.length - 1) next(); }, 350);
+  setTimeout(nextUngraded, 350);
 }
 
 function onLearning() {
@@ -701,6 +750,7 @@ function onLearning() {
   if (activeGrades()[card.id]?.status === 'learning') { initiateGradeReset(card.id); return; }
   saveGrade(card.id, 'learning');
   hideGradeButtons();
+  setTimeout(nextUngraded, 350);
 }
 
 function initiateGradeReset(cardId) {
@@ -905,6 +955,16 @@ function closeHelpModal() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Apply deck from URL query param immediately so button is active before fetch completes
+  const earlyDeck = new URLSearchParams(location.search).get('deck');
+  if (earlyDeck) {
+    state.deck = earlyDeck;
+    document.querySelectorAll('.dbtn').forEach(b => {
+      b.classList.toggle('active', b.dataset.deck === earlyDeck);
+      b.setAttribute('aria-pressed', b.dataset.deck === earlyDeck ? 'true' : 'false');
+    });
+  }
+
   loadAll();
   if (!localStorage.getItem('msc_help_seen')) openHelpModal();
 
@@ -942,6 +1002,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (flipped) showGradeButtons(); else hideGradeButtons();
     // Switch active grade set — refresh badge and stats immediately
     if (deck.length) renderGradeBadge(deck[idx].id);
+    if (deck.length) setUrl(state.deck, deck[idx].id, startFlipped);
     updateHintVisibility();
     updateLearningCount();
     refreshKnownLearningStat();

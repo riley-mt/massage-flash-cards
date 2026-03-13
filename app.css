@@ -108,6 +108,7 @@ header { position: relative }
 .stats { max-width:560px }
 .sn.sn--known    { color:#22c55e }
 .sn.sn--learning { color:#f59e0b }
+.sn-all { font-size:.65em; opacity:.45; font-weight:400; }
 
 /* ── Card bottom bar (tag + hint share one divider) ─────────── */
 .card-bottom { margin-top:auto; position:relative;
