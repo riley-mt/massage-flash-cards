@@ -4,7 +4,6 @@
 
 const FC_DECKS = {
   anatomy:   'Anatomy & Physiology',
-  bones:     'Bones & Landmarks',
   pathology: 'Pathology'
 };
 
@@ -82,6 +81,27 @@ function mapMuscle(raw, i) {
   };
 }
 
+const BONE_CAT_LABELS = {
+  'bones-joints': 'Other',
+  'landmarks':    'Landmark Terms'
+};
+
+function mapBone(raw, i) {
+  const isLandmark = raw.type === 'landmark';
+  return {
+    id: 'bn-' + i, deck: 'bones',
+    category: raw.category,
+    title: isLandmark ? raw.name : raw.q,
+    subtitle: isLandmark ? 'What is the:' : null,
+    fields: isLandmark
+      ? [ { key: 'f1', label: raw.f1label, value: raw.f1 },
+          { key: 'f2', label: raw.f2label, value: raw.f2 } ]
+      : [ { key: 'a', label: 'Answer', value: raw.a } ],
+    meta: { cardType: raw.type, pageRef: null, isFascia: false,
+            categoryLabel: BONE_CAT_LABELS[raw.category] || raw.category }
+  };
+}
+
 function mapPrimeMover(raw, i) {
   return {
     id: 'pm-' + i, deck: 'prime-movers',
@@ -133,6 +153,7 @@ function cardSource(card) {
 
 const SOURCES = [
   { url: 'flashcards-data.json',   mapper: mapFlashcard  },
+  { url: 'bones-data.json',        mapper: mapBone       },
   { url: 'muscles-data.json',      mapper: mapMuscle     },
   { url: 'prime-movers-data.json', mapper: mapPrimeMover }
 ];
