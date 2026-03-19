@@ -1,23 +1,191 @@
 [
-  {"unit":"APK2W","page":"p 210","isFascia":false,"name":"Rectus Abdominis","origin":"Pubic crest and pubic symphysis","insertion":"Cartilage of ribs 5-7 and xiphoid process","action":"Flexes vertebral column; tilts pelvis posteriorly; compresses abdominal contents"},
-  {"unit":"APK2W","page":"p 210","isFascia":false,"name":"External Oblique","origin":"External surfaces of ribs 5-12","insertion":"Anterior iliac crest; rectus sheath to linea alba","action":"Bilaterally: flexes vertebral column, compresses abdomen. Unilaterally: laterally flexes to same side, rotates to OPPOSITE side"},
-  {"unit":"APK2W","page":"p 211","isFascia":false,"name":"Internal Oblique","origin":"Lateral inguinal ligament, iliac crest, thoracolumbar fascia","insertion":"Internal surface of lower 3 ribs; rectus sheath to linea alba","action":"Bilaterally: flexes vertebral column, compresses abdomen. Unilaterally: laterally flexes to same side, rotates to SAME side"},
-  {"unit":"APK2W","page":"p 196","isFascia":false,"name":"Erector Spinae","origin":"Posterior iliac crest, sacrum, spinous and transverse processes of vertebrae, posterior ribs","insertion":"Ribs, transverse and spinous processes of vertebrae, occipital bone (Iliocostalis, Longissimus, Spinalis)","action":"Bilaterally: extends vertebral column, fixes last rib. Unilaterally: laterally flexes to same side; assists rotation"},
-  {"unit":"APK2W","page":"p 207","isFascia":false,"name":"Quadratus Lumborum","origin":"Posterior iliac crest","insertion":"Last (12th) rib; transverse processes of L1-L4","action":"Bilaterally: extends lumbar spine, fixes last rib. Unilaterally: elevates hip, laterally flexes to same side"},
-  {"unit":"APK3W","page":"p 315","isFascia":false,"name":"Gluteus Maximus","origin":"Posterior ilium; posterior sacrum and coccyx; sacrotuberous ligament","insertion":"Gluteal tuberosity of femur; iliotibial (IT) band","action":"Hip extension; lateral rotation. Upper fibers: abduction. Lower fibers: adduction"},
-  {"unit":"APK3W","page":"p 315","isFascia":false,"name":"Gluteus Medius","origin":"External surface of ilium between posterior and anterior gluteal lines","insertion":"Greater trochanter of femur (lateral surface)","action":"Hip abduction; medial rotation. Stabilizes pelvis during walking"},
-  {"unit":"APK3W","page":"p 315","isFascia":false,"name":"Gluteus Minimus","origin":"External surface of ilium between anterior and inferior gluteal lines","insertion":"Greater trochanter of femur (anterior surface)","action":"Hip abduction; medial rotation. Assists in stabilizing the pelvis"},
-  {"unit":"APK3W","page":"p 328","isFascia":false,"name":"Piriformis","origin":"Anterior surface of sacrum (S2-S4); sacrotuberous ligament","insertion":"Greater trochanter of femur (superior surface)","action":"Lateral rotation of hip; abduction when hip is flexed. Sciatic nerve runs beneath or through it"},
-  {"unit":"APK3W","page":"p 332","isFascia":false,"name":"Psoas / Iliopsoas","origin":"Psoas: transverse processes and bodies of T12-L5. Iliacus: iliac fossa and anterior sacrum","insertion":"Lesser trochanter of femur","action":"Hip flexion; lateral rotation of femur. Bilateral: flexes trunk toward thigh"},
-  {"unit":"APK3W","page":"p 324","isFascia":false,"name":"Tensor Fasciae Latae","origin":"Anterior superior iliac spine (ASIS); anterior iliac crest","insertion":"Iliotibial (IT) band to lateral condyle of tibia","action":"Hip flexion, abduction, and medial rotation. Tenses IT band; assists knee extension"},
-  {"unit":"APK4W","page":"p 382","isFascia":true,"name":"Tibialis Posterior","origin":"Posterior tibia and fibula; interosseous membrane","insertion":"Navicular tuberosity; cuneiforms; bases of metatarsals 2-4","action":"Plantar flexion; inversion of foot. Primary support of medial longitudinal arch"},
-  {"unit":"APK4W","page":"p 376","isFascia":true,"name":"Fibularis (Peroneus) Longus","origin":"Head and upper 2/3 of lateral fibula","insertion":"Base of 1st metatarsal; medial cuneiform (plantar surface)","action":"Eversion of foot; plantar flexion. Supports transverse and lateral arches"},
-  {"unit":"APK4W","page":"p 379","isFascia":true,"name":"Extensor Digitorum Longus","origin":"Lateral condyle of tibia; anterior fibula; interosseous membrane","insertion":"Dorsal surface of middle and distal phalanges of toes 2-5","action":"Extension of toes 2-5; dorsiflexion of foot; eversion of foot"},
-  {"unit":"APK4W","page":"p 136","isFascia":true,"name":"Extensor Digitorum (hand)","origin":"Lateral epicondyle of humerus (common extensor tendon)","insertion":"Dorsal expansion of fingers 2-5","action":"Extension of fingers 2-5 at MCP, PIP and DIP joints; assists wrist extension"},
-  {"unit":"APK4W","page":"p 141","isFascia":true,"name":"Flexor Carpi Radialis","origin":"Medial epicondyle of humerus (common flexor tendon)","insertion":"Base of 2nd and 3rd metacarpals","action":"Wrist flexion; radial deviation of wrist"},
-  {"unit":"APK5W","page":"p 320","isFascia":false,"name":"Adductor Magnus","origin":"Inferior ramus of pubis; ramus of ischium; ischial tuberosity","insertion":"Linea aspera of femur (adductor part); adductor tubercle (hamstring part)","action":"Hip adduction. Adductor part: flexion and medial rotation. Hamstring part: extension and lateral rotation"},
-  {"unit":"APK5W","page":"p 320","isFascia":false,"name":"Adductor Longus","origin":"Pubic body just below pubic crest","insertion":"Middle third of linea aspera of femur","action":"Hip adduction; assists hip flexion and medial rotation"},
-  {"unit":"APK5W","page":"p 320","isFascia":false,"name":"Adductor Brevis","origin":"Inferior ramus of pubis","insertion":"Proximal linea aspera of femur","action":"Hip adduction; assists hip flexion and medial rotation"},
-  {"unit":"APK5W","page":"p 321","isFascia":false,"name":"Pectineus","origin":"Pectineal line of pubis","insertion":"Pectineal line of femur just below lesser trochanter","action":"Hip adduction; hip flexion; assists medial rotation"},
-  {"unit":"APK5W","page":"p 321","isFascia":false,"name":"Gracilis","origin":"Inferior ramus of pubis; body of pubis","insertion":"Medial surface of proximal tibia (pes anserinus)","action":"Hip adduction; knee flexion; medial rotation of tibia when knee is flexed"}
+  {
+    "unit": "APK2W",
+    "page": "p 210",
+    "isFascia": false,
+    "name": "Rectus Abdominis",
+    "origin": "Pubic crest and pubic symphysis",
+    "insertion": "Cartilage of ribs 5-7 and xiphoid process",
+    "action": "Flexes vertebral column; tilts pelvis posteriorly; compresses abdominal contents"
+  },
+  {
+    "unit": "APK2W",
+    "page": "p 210",
+    "isFascia": false,
+    "name": "External Oblique",
+    "origin": "External surfaces of ribs 5-12",
+    "insertion": "Anterior iliac crest; rectus sheath to linea alba",
+    "action": "Bilaterally: flexes vertebral column, compresses abdomen. Unilaterally: laterally flexes to same side, rotates to OPPOSITE side"
+  },
+  {
+    "unit": "APK2W",
+    "page": "p 211",
+    "isFascia": false,
+    "name": "Internal Oblique",
+    "origin": "Lateral inguinal ligament, iliac crest, thoracolumbar fascia",
+    "insertion": "Internal surface of lower 3 ribs; rectus sheath to linea alba",
+    "action": "Bilaterally: flexes vertebral column, compresses abdomen. Unilaterally: laterally flexes to same side, rotates to SAME side"
+  },
+  {
+    "unit": "APK2W",
+    "page": "p 196",
+    "isFascia": false,
+    "name": "Erector Spinae",
+    "origin": "Posterior iliac crest, sacrum, spinous and transverse processes of vertebrae, posterior ribs",
+    "insertion": "Ribs, transverse and spinous processes of vertebrae, occipital bone (Iliocostalis, Longissimus, Spinalis)",
+    "action": "Bilaterally: extends vertebral column, fixes last rib. Unilaterally: laterally flexes to same side; assists rotation"
+  },
+  {
+    "unit": "APK2W",
+    "page": "p 207",
+    "isFascia": false,
+    "name": "Quadratus Lumborum",
+    "origin": "Posterior iliac crest",
+    "insertion": "Last (12th) rib; transverse processes of L1-L4",
+    "action": "Bilaterally: extends lumbar spine, fixes last rib. Unilaterally: elevates hip, laterally flexes to same side"
+  },
+  {
+    "unit": "APK3W",
+    "page": "p 315",
+    "isFascia": false,
+    "name": "Gluteus Maximus",
+    "origin": "Posterior ilium; posterior sacrum and coccyx; sacrotuberous ligament",
+    "insertion": "Gluteal tuberosity of femur; iliotibial (IT) band",
+    "action": "Hip extension; lateral rotation. Upper fibers: abduction. Lower fibers: adduction"
+  },
+  {
+    "unit": "APK3W",
+    "page": "p 315",
+    "isFascia": false,
+    "name": "Gluteus Medius",
+    "origin": "External surface of ilium between posterior and anterior gluteal lines",
+    "insertion": "Greater trochanter of femur (lateral surface)",
+    "action": "Hip abduction; medial rotation. Stabilizes pelvis during walking"
+  },
+  {
+    "unit": "APK3W",
+    "page": "p 315",
+    "isFascia": false,
+    "name": "Gluteus Minimus",
+    "origin": "External surface of ilium between anterior and inferior gluteal lines",
+    "insertion": "Greater trochanter of femur (anterior surface)",
+    "action": "Hip abduction; medial rotation. Assists in stabilizing the pelvis"
+  },
+  {
+    "unit": "APK3W",
+    "page": "p 328",
+    "isFascia": false,
+    "name": "Piriformis",
+    "origin": "Anterior surface of sacrum (S2-S4); sacrotuberous ligament",
+    "insertion": "Greater trochanter of femur (superior surface)",
+    "action": "Lateral rotation of hip; abduction when hip is flexed. Sciatic nerve runs beneath or through it"
+  },
+  {
+    "unit": "APK3W",
+    "page": "p 332",
+    "isFascia": false,
+    "name": "Psoas / Iliopsoas",
+    "origin": "Psoas: transverse processes and bodies of T12-L5. Iliacus: iliac fossa and anterior sacrum",
+    "insertion": "Lesser trochanter of femur",
+    "action": "Hip flexion; lateral rotation of femur. Bilateral: flexes trunk toward thigh"
+  },
+  {
+    "unit": "APK3W",
+    "page": "p 324",
+    "isFascia": false,
+    "name": "Tensor Fasciae Latae",
+    "origin": "Anterior superior iliac spine (ASIS); anterior iliac crest",
+    "insertion": "Iliotibial (IT) band to lateral condyle of tibia",
+    "action": "Hip flexion, abduction, and medial rotation. Tenses IT band; assists knee extension"
+  },
+  {
+    "unit": "APK4W",
+    "page": "p 382",
+    "isFascia": true,
+    "name": "Tibialis Posterior",
+    "origin": "Posterior tibia and fibula; interosseous membrane",
+    "insertion": "Navicular tuberosity; cuneiforms; bases of metatarsals 2-4",
+    "action": "Plantar flexion; inversion of foot. Primary support of medial longitudinal arch"
+  },
+  {
+    "unit": "APK4W",
+    "page": "p 376",
+    "isFascia": true,
+    "name": "Fibularis (Peroneus) Longus",
+    "origin": "Head and upper 2/3 of lateral fibula",
+    "insertion": "Base of 1st metatarsal; medial cuneiform (plantar surface)",
+    "action": "Eversion of foot; plantar flexion. Supports transverse and lateral arches"
+  },
+  {
+    "unit": "APK4W",
+    "page": "p 379",
+    "isFascia": true,
+    "name": "Extensor Digitorum Longus",
+    "origin": "Lateral condyle of tibia; anterior fibula; interosseous membrane",
+    "insertion": "Dorsal surface of middle and distal phalanges of toes 2-5",
+    "action": "Extension of toes 2-5; dorsiflexion of foot; eversion of foot"
+  },
+  {
+    "unit": "APK4W",
+    "page": "p 136",
+    "isFascia": true,
+    "name": "Extensor Digitorum (hand)",
+    "origin": "Lateral epicondyle of humerus (common extensor tendon)",
+    "insertion": "Dorsal expansion of fingers 2-5",
+    "action": "Extension of fingers 2-5 at MCP, PIP and DIP joints; assists wrist extension"
+  },
+  {
+    "unit": "APK4W",
+    "page": "p 141",
+    "isFascia": true,
+    "name": "Flexor Carpi Radialis",
+    "origin": "Medial epicondyle of humerus (common flexor tendon)",
+    "insertion": "Base of 2nd and 3rd metacarpals",
+    "action": "Wrist flexion; radial deviation of wrist"
+  },
+  {
+    "unit": "APK5W",
+    "page": "p 320",
+    "isFascia": false,
+    "name": "Adductor Magnus",
+    "origin": "Inferior ramus of pubis; ramus of ischium; ischial tuberosity",
+    "insertion": "Linea aspera of femur (adductor part); adductor tubercle (hamstring part)",
+    "action": "Hip adduction. Adductor part: flexion and medial rotation. Hamstring part: extension and lateral rotation"
+  },
+  {
+    "unit": "APK5W",
+    "page": "p 320",
+    "isFascia": false,
+    "name": "Adductor Longus",
+    "origin": "Pubic body just below pubic crest",
+    "insertion": "Middle third of linea aspera of femur",
+    "action": "Hip adduction; assists hip flexion and medial rotation"
+  },
+  {
+    "unit": "APK5W",
+    "page": "p 320",
+    "isFascia": false,
+    "name": "Adductor Brevis",
+    "origin": "Inferior ramus of pubis",
+    "insertion": "Proximal linea aspera of femur",
+    "action": "Hip adduction; assists hip flexion and medial rotation"
+  },
+  {
+    "unit": "APK5W",
+    "page": "p 321",
+    "isFascia": false,
+    "name": "Pectineus",
+    "origin": "Pectineal line of pubis",
+    "insertion": "Pectineal line of femur just below lesser trochanter",
+    "action": "Hip adduction; hip flexion; assists medial rotation"
+  },
+  {
+    "unit": "APK5W",
+    "page": "p 321",
+    "isFascia": false,
+    "name": "Gracilis",
+    "origin": "Inferior ramus of pubis; body of pubis",
+    "insertion": "Medial surface of proximal tibia (pes anserinus)",
+    "action": "Hip adduction; knee flexion; medial rotation of tibia when knee is flexed"
+  }
 ]
