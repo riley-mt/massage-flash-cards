@@ -100,8 +100,13 @@ header { position: relative }
   .grade-row { margin-bottom:4px; flex-shrink:0; }
   .btn-grade { padding:8px 18px; font-size:.76rem; }
 
-  /* Hide stats on mobile — visible in gear panel only */
-  .stats { display:none; }
+  /* Stats: tiny strip at the bottom */
+  .stats { display:flex; flex-shrink:0; gap:0; margin:0; max-width:none;
+    border-top:1px solid rgba(255,255,255,.06); padding-top:3px; }
+  .stat { flex:1; }
+  .sn { font-size:1rem; }
+  .sl { font-size:.52rem; letter-spacing:.5px; }
+  .sn--learning ~ .sl, .sn--known ~ .sl { display:none; }
 
   /* Warn banner */
   .warn-banner { flex-shrink:0; }

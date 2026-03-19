@@ -1178,11 +1178,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') {
       if (document.getElementById('help-modal')?.classList.contains('open')) { closeHelpModal(); return; }
       if (document.getElementById('settings-panel')?.classList.contains('open')) { toggleSettingsPanel(true); return; }
+      if (document.getElementById('grade-reset-banner')?.style.display !== 'none') { cancelGradeReset(); return; }
     }
     // Don't hijack keyboard when typing in inputs or textareas
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next();
-    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prev();
+    if (e.key === 'ArrowRight') next();
+    else if (e.key === 'ArrowLeft') prev();
+    else if (e.key === 'ArrowUp') { e.preventDefault(); onKnown(); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); onLearning(); }
     else if (e.key === ' ') { e.preventDefault(); flipCard(); }
   });
 
