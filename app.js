@@ -50,7 +50,7 @@ let searchTimer = null, activeDropdownCard = null;
 let gradeResetSuppressed = false, pendingResetId = null;
 let tagsEnabled = localStorage.getItem('msc_tags_enabled') === 'true';
 
-const state = { deck: 'all', category: 'all', tag: null, search: '', smartReview: false };
+const state = { deck: 'all', category: 'all', tag: null, search: '', smartReview: localStorage.getItem('msc_smart_review') === 'true' };
 
 // ════════════════════════════════════════════════════════════════
 // MAPPERS
@@ -1053,6 +1053,12 @@ function updateFilterSummary() {
     const modeLabel = document.querySelector(`#modes .mode.active`)?.textContent || activeMode;
     chips.push(`<button class="fsumchip fsum-mode" onclick="toggleSettingsPanel()" aria-label="Mode: ${modeLabel}. Tap to open settings">${modeLabel}</button>`);
   }
+  if (startFlipped) {
+    chips.push(`<button class="fsumchip fsum-flipped" onclick="toggleSettingsPanel()" aria-label="Start cards flipped is on. Tap to open settings">Flipped</button>`);
+  }
+  if (state.smartReview) {
+    chips.push(`<button class="fsumchip fsum-learning" onclick="toggleSettingsPanel()" aria-label="Still learning only is on. Tap to open settings">Still Learning</button>`);
+  }
   el.innerHTML = chips.join('');
 }
 
@@ -1121,6 +1127,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Smart review toggle
   document.getElementById('smart-review-input').addEventListener('change', e => {
     state.smartReview = e.target.checked;
+    localStorage.setItem('msc_smart_review', state.smartReview);
     document.getElementById('smart-review-toggle').classList.toggle('checked', state.smartReview);
     applyFilter(); updateSettingsBadge(); updateFilterSummary();
   });
@@ -1150,6 +1157,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Apply tags visibility on load
   applyTagsVisibility();
+
+  // Sync smart review checkbox on load
+  if (state.smartReview) {
+    document.getElementById('smart-review-input').checked = true;
+    document.getElementById('smart-review-toggle').classList.add('checked');
+  }
 
   // Grade buttons
   document.getElementById('btn-known').addEventListener('click', onKnown);

@@ -184,6 +184,8 @@ header { position: relative }
   padding:5px 16px; font-size:.78rem; font-weight:700; }
 .fsumchip.fsum-deck { border-color:var(--deck-color, #b85c4a); background:color-mix(in srgb, var(--deck-color, #b85c4a) 15%, transparent); }
 .fsumchip.fsum-mode { border-color:#c9a84c; background:rgba(201,168,76,.15); color:#c9a84c; }
+.fsumchip.fsum-flipped  { border-color:#4a7c8a; background:rgba(74,124,138,.15); color:#4a9aad; }
+.fsumchip.fsum-learning { border-color:#f59e0b; background:rgba(245,158,11,.15); color:#f59e0b; }
 
 /* ── Deck Selector ───────────────────────────────────────────── */
 .deck-selector { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:10px; }
