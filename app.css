@@ -19,11 +19,14 @@ header { position: relative }
   font-size:.85rem; font-weight:700; cursor:pointer; line-height:1; transition:all .18s }
 .btn-help:hover { background:rgba(255,255,255,.15); color:#f0ebe0; border-color:rgba(255,255,255,.4) }
 
-/* Filter summary — mobile only */
-.filter-summary { display:none; }
+/* Filter summary */
+.filter-summary { display:flex; flex-wrap:wrap; gap:4px; justify-content:center;
+  max-width:560px; margin:0 auto 8px; min-height:0; }
+.filter-summary:empty { display:none; }
 
-/* Gear/settings button — hidden on desktop, shown on mobile */
-.btn-settings { display:none; position:absolute; top:12px; right:48px; width:28px; height:28px;
+/* Gear/settings button — visible on both desktop and mobile */
+.btn-settings { display:flex; align-items:center; justify-content:center;
+  position:absolute; top:12px; right:48px; width:28px; height:28px;
   border-radius:50%; border:1.5px solid rgba(255,255,255,.2); background:rgba(255,255,255,.07);
   color:#aab0be; font-size:.9rem; cursor:pointer; transition:all .18s; }
 .btn-settings:hover { background:rgba(255,255,255,.15); color:#f0ebe0; border-color:rgba(255,255,255,.4) }
@@ -33,13 +36,9 @@ header { position: relative }
 
 /* Settings panel: always visible on desktop */
 .settings-panel { position:relative; }
-.btn-settings-close { display:none; position:absolute; top:16px; right:18px;
+.btn-settings-close { display:none; position:absolute; top:8px; right:10px;
   background:none; border:none; color:#7a8090; font-size:1.3rem; cursor:pointer; line-height:1; }
 .btn-settings-close:hover { color:#f0ebe0; }
-@media (max-width:600px) {
-  .settings-panel.open .btn-settings-close { display:flex; align-items:center; justify-content:center; }
-}
-.options-row { flex-direction:column; align-items:flex-start; }
 
 /* ── Mobile layout ───────────────────────────────────────────── */
 @media (max-width: 600px) {
@@ -50,9 +49,6 @@ header { position: relative }
   header h1 { font-size:1.3rem; }
   .app-subtitle { display:none; }
   .eyebrow { font-size:.55rem; letter-spacing:3px; }
-
-  /* Show gear button */
-  .btn-settings { display:flex; align-items:center; justify-content:center; }
 
   /* Deck strip: horizontal scroll, no wrap */
   .deck-selector { flex-wrap:nowrap; overflow-x:auto; justify-content:flex-start;
@@ -76,13 +72,19 @@ header { position: relative }
   .fsumchip { padding:2px 9px; border-radius:100px; border:1.5px solid rgba(255,255,255,.25);
     background:rgba(255,255,255,.08); color:#d0d5e0; font-size:.62rem; font-weight:600;
     font-family:Georgia,serif; cursor:pointer; }
-  .fsumchip.fsum-deck { border-color:var(--deck-color, #b85c4a); background:color-mix(in srgb, var(--deck-color, #b85c4a) 15%, transparent); }
 
-  /* Settings panel: collapsed by default */
-  .settings-panel { display:none; flex-shrink:0; }
-  .settings-panel.open { display:block; background:rgba(255,255,255,.04);
+  /* Settings panel: mobile open style */
+  .settings-panel { flex-shrink:0; }
+  .settings-panel.open { background:rgba(255,255,255,.04);
     border:1px solid rgba(255,255,255,.08); border-radius:12px;
     padding:10px; margin-bottom:6px; overflow-y:auto; max-height:55vh; }
+
+  /* Chips left-aligned inside panel */
+  .deck-selector { justify-content:flex-start; margin-bottom:6px; }
+  #filter-cat { justify-content:flex-start; margin-bottom:0; }
+
+  /* Toggles stack vertically */
+  .options-row { flex-direction:column; align-items:flex-start; }
 
   /* Progress bar compact */
   .prog { margin-bottom:6px; flex-shrink:0; width:100%; max-width:none; }
@@ -139,8 +141,19 @@ header { position: relative }
 .settings-section--last { border-bottom:none; margin-bottom:0; padding-bottom:0; }
 .settings-section--last .options-row { margin-bottom:0; }
 .settings-label { font-size:.58rem; font-weight:700; letter-spacing:1.5px;
-  text-transform:uppercase; color:#555c6e; margin-bottom:7px;
-  /* reset h3 defaults */ line-height:1; }
+  text-transform:uppercase; color:#555c6e; margin:0 0 7px; line-height:1; }
+
+/* Desktop: hidden by default, toggled by gear, contained to middle column */
+.settings-panel { display:none; max-width:560px; margin:0 auto; }
+.settings-panel.open { display:block; margin-bottom:16px;
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
+  border-radius:12px; padding:10px 16px 10px; }
+.btn-settings-close { display:none; }
+.settings-panel.open .btn-settings-close { display:flex; align-items:center; justify-content:center; }
+.settings-subsection-label { font-size:.55rem; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase; color:#444b5a; margin-top:10px; margin-bottom:6px;
+  padding-top:10px; border-top:1px solid rgba(255,255,255,.06);
+  width:100%; display:block; }
 .settings-subsection-label { font-size:.55rem; font-weight:700; letter-spacing:1.5px;
   text-transform:uppercase; color:#444b5a; margin-top:10px; margin-bottom:6px;
   padding-top:10px; border-top:1px solid rgba(255,255,255,.06);
@@ -157,9 +170,11 @@ header { position: relative }
 /* Active chips — larger, filled */
 .dbtn.active, .filt.active, .mode.active, .fsumchip {
   padding:5px 16px; font-size:.78rem; font-weight:700; }
+.fsumchip.fsum-deck { border-color:var(--deck-color, #b85c4a); background:color-mix(in srgb, var(--deck-color, #b85c4a) 15%, transparent); }
+.fsumchip.fsum-mode { border-color:#c9a84c; background:rgba(201,168,76,.15); color:#c9a84c; }
 
 /* ── Deck Selector ───────────────────────────────────────────── */
-.deck-selector { display:flex; flex-wrap:wrap; gap:6px; justify-content:flex-start; margin-bottom:6px; }
+.deck-selector { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:10px; }
 .dbtn { font-weight:600; }
 .dbtn.active              { background:#b85c4a; color:#fff; border-color:#b85c4a }
 .dbtn.active.d-bones      { background:#c9a84c; border-color:#c9a84c; color:#1a1f2e }
@@ -168,7 +183,7 @@ header { position: relative }
 .dbtn.active.d-prime      { background:#7a5c9e; border-color:#7a5c9e }
 
 /* ── Category chips ──────────────────────────────────────────── */
-#filter-cat { display:flex; flex-wrap:wrap; align-items:center; gap:5px; justify-content:flex-start; margin-bottom:0; min-height:0; }
+#filter-cat { display:flex; flex-wrap:wrap; align-items:center; gap:5px; justify-content:center; margin-bottom:6px; min-height:0; }
 #filter-cat:empty { margin-bottom:0; }
 .filt { border-radius:100px; }
 .filt.active { background:#b85c4a; color:#fff; border-color:#b85c4a; }

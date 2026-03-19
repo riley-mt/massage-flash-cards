@@ -1012,6 +1012,7 @@ function toggleSettingsPanel(forceClose) {
 }
 
 document.addEventListener('click', e => {
+  if (!window.matchMedia('(max-width:600px)').matches) return; // desktop: no auto-close
   const panel = document.getElementById('settings-panel');
   if (!panel?.classList.contains('open')) return;
   if (!e.target.isConnected) return; // target was replaced by a re-render
@@ -1045,11 +1046,12 @@ function updateFilterSummary() {
   }
   if (state.category !== 'all') {
     const catLabel = document.querySelector(`#filter-cat .filt[data-cat="${state.category}"]`)?.textContent || state.category;
-    chips.push(`<button class="fsumchip" onclick="toggleSettingsPanel()" aria-label="Category: ${catLabel}. Tap to open settings">${catLabel}</button>`);
+    const catColor = DECK_COLORS[state.deck] || '#b85c4a';
+    chips.push(`<button class="fsumchip fsum-deck" style="--deck-color:${catColor}" onclick="toggleSettingsPanel()" aria-label="Category: ${catLabel}. Tap to open settings">${catLabel}</button>`);
   }
   if (activeMode !== 'all') {
     const modeLabel = document.querySelector(`#modes .mode.active`)?.textContent || activeMode;
-    chips.push(`<button class="fsumchip" onclick="toggleSettingsPanel()" aria-label="Mode: ${modeLabel}. Tap to open settings">${modeLabel}</button>`);
+    chips.push(`<button class="fsumchip fsum-mode" onclick="toggleSettingsPanel()" aria-label="Mode: ${modeLabel}. Tap to open settings">${modeLabel}</button>`);
   }
   el.innerHTML = chips.join('');
 }
@@ -1173,6 +1175,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Keyboard nav
   document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (document.getElementById('help-modal')?.classList.contains('open')) { closeHelpModal(); return; }
+      if (document.getElementById('settings-panel')?.classList.contains('open')) { toggleSettingsPanel(true); return; }
+    }
     // Don't hijack keyboard when typing in inputs or textareas
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next();
