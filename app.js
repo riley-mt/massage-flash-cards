@@ -192,8 +192,7 @@ async function loadAll() {
   initColorSwatches();
   applyFilter();
   jumpToHash(initialHash);
-  updateSettingsBadge();
-  updateFilterSummary();
+  syncUI();
 }
 
 function jumpToHash(hash = location.hash) {
@@ -362,7 +361,7 @@ function updateCategoryChips() {
   el.querySelectorAll('.filt').forEach(b => b.addEventListener('click', () => {
     state.category = b.dataset.cat;
     applyFilter();
-    updateSettingsBadge(); updateFilterSummary();
+    syncUI();
   }));
 }
 
@@ -442,7 +441,7 @@ function updateModeButtons() {
     const ctx = getModeContext();
     if (ctx) { modeMemory[ctx] = activeMode; saveModeMemory(); }
     if (deck.length) { renderFront(deck[idx]); renderBack(deck[idx]); }
-    updateSettingsBadge(); updateFilterSummary();
+    syncUI();
   }));
 }
 
@@ -1059,8 +1058,14 @@ function updateFilterSummary() {
   if (state.smartReview) {
     chips.push(`<button class="fsumchip fsum-learning" onclick="toggleSettingsPanel()" aria-label="Still learning only is on. Tap to open settings">Still Learning</button>`);
   }
+  if (state.search.trim()) {
+    const label = state.search.length > 18 ? state.search.slice(0, 16) + '\u2026' : state.search;
+    chips.push(`<button class="fsumchip fsum-search" onclick="document.getElementById('search-input').focus();document.getElementById('search-input').select();" aria-label="Search: ${state.search}. Tap to edit search">${label}</button>`);
+  }
   el.innerHTML = chips.join('');
 }
+
+function syncUI() { updateSettingsBadge(); updateFilterSummary(); }
 
 function updateSettingsBadge() {
   const badge = document.getElementById('settings-badge');
@@ -1115,13 +1120,13 @@ document.addEventListener('DOMContentLoaded', () => {
     state.deck = btn.dataset.deck;
     state.category = 'all';
     applyFilter();
-    updateSettingsBadge(); updateFilterSummary();
+    syncUI();
   });
 
   // Search (debounced)
   document.getElementById('search-input').addEventListener('input', e => {
     clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => { state.search = e.target.value; applyFilter(); updateSettingsBadge(); updateFilterSummary(); }, 150);
+    searchTimer = setTimeout(() => { state.search = e.target.value; applyFilter(); syncUI(); }, 150);
   });
 
   // Smart review toggle
@@ -1129,7 +1134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     state.smartReview = e.target.checked;
     localStorage.setItem('msc_smart_review', state.smartReview);
     document.getElementById('smart-review-toggle').classList.toggle('checked', state.smartReview);
-    applyFilter(); updateSettingsBadge(); updateFilterSummary();
+    applyFilter(); syncUI();
   });
 
   // Start flipped toggle
@@ -1145,7 +1150,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateHintVisibility();
     updateLearningCount();
     refreshKnownLearningStat();
-    updateSettingsBadge(); updateFilterSummary();
+    syncUI();
   });
 
   // Tags feature toggle
@@ -1162,6 +1167,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (state.smartReview) {
     document.getElementById('smart-review-input').checked = true;
     document.getElementById('smart-review-toggle').classList.add('checked');
+    updateFilterSummary();
   }
 
   // Grade buttons
