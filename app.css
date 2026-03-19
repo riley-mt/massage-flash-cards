@@ -232,8 +232,9 @@ header { position: relative }
 #search-input::placeholder { color:#7a8090 }
 #search-input:focus { border-color:rgba(255,255,255,.25) }
 
-/* ── Smart Review toggle ─────────────────────────────────────── */
-#smart-review-toggle.toggle.checked { border-color:#c9a84c; color:#c9a84c }
+/* ── Options toggles ─────────────────────────────────────────── */
+#smart-review-toggle.toggle.checked { border-color:#f59e0b; color:#f59e0b }
+#flip-label.toggle.checked          { border-color:#4a9aad; color:#4a9aad }
 
 /* ── Card title size variants ────────────────────────────────── */
 .card-title { font-size:clamp(1.3rem,3vw,1.9rem); font-weight:700; color:#1a1f2e; line-height:1.25; margin-bottom:8px }
