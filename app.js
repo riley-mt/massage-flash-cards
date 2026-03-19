@@ -48,6 +48,7 @@ let ALL = [], deck = [], grades = {}, gradesFlipped = {}, tags = [], tagAssignme
 let idx = 0, seen = new Set(), flipped = false, activeMode = 'all', startFlipped = false;
 let searchTimer = null, activeDropdownCard = null;
 let gradeResetSuppressed = false, pendingResetId = null;
+let tagsEnabled = localStorage.getItem('msc_tags_enabled') === 'true';
 
 const state = { deck: 'all', category: 'all', tag: null, search: '', smartReview: false };
 
@@ -191,6 +192,8 @@ async function loadAll() {
   initColorSwatches();
   applyFilter();
   jumpToHash(initialHash);
+  updateSettingsBadge();
+  updateFilterSummary();
 }
 
 function jumpToHash(hash = location.hash) {
@@ -315,7 +318,8 @@ function applyFilter() {
   updateModeButtons();
 
   if (!deck.length) {
-    showEmptyState(true);
+    const isFiltered = state.deck !== 'all' || state.category !== 'all' || state.tag || state.search.trim() || state.smartReview;
+    showEmptyState(true, isFiltered);
     updateProgress();
   } else {
     showEmptyState(false);
@@ -323,9 +327,17 @@ function applyFilter() {
   }
 }
 
-function showEmptyState(show) {
+function showEmptyState(show, isFiltered = true) {
   document.getElementById('empty-state').classList.toggle('visible', show);
   document.getElementById('card').style.display = show ? 'none' : '';
+  if (show) {
+    const msg = isFiltered
+      ? 'No cards match your current filters. Try adjusting the deck, category, or search term.'
+      : 'No cards are available. Check that the card data has loaded correctly.';
+    const el = document.getElementById('sr-announce');
+    el.textContent = '\u200B';
+    requestAnimationFrame(() => { el.textContent = msg; });
+  }
 }
 
 function updateCategoryChips() {
@@ -339,7 +351,8 @@ function updateCategoryChips() {
   const seen = new Map(); // category → label
   allInDeck.forEach(c => seen.set(c.category, c.meta.categoryLabel));
 
-  let html = `<button class="filt${state.category === 'all' ? ' active' : ''}" data-cat="all">All</button>`;
+  let html = `<div class="settings-subsection-label">Category</div>`;
+  html += `<button class="filt${state.category === 'all' ? ' active' : ''}" data-cat="all">All</button>`;
   seen.forEach((label, cat) => {
     const active = state.category === cat ? ' active' : '';
     html += `<button class="filt${active}" data-cat="${cat}">${label}</button>`;
@@ -349,6 +362,7 @@ function updateCategoryChips() {
   el.querySelectorAll('.filt').forEach(b => b.addEventListener('click', () => {
     state.category = b.dataset.cat;
     applyFilter();
+    updateSettingsBadge(); updateFilterSummary();
   }));
 }
 
@@ -389,17 +403,17 @@ function deriveAvailableModes(cards) {
   const sample = cards[0];
   switch (sample.meta.cardType) {
     case 'muscle':
-      modes.push({ key: 'origin',    label: 'Quiz: Origin' });
-      modes.push({ key: 'insertion', label: 'Quiz: Insertion' });
-      modes.push({ key: 'action',    label: 'Quiz: Action' });
+      modes.push({ key: 'origin',    label: 'Origin' });
+      modes.push({ key: 'insertion', label: 'Insertion' });
+      modes.push({ key: 'action',    label: 'Action' });
       break;
     case 'movement':
-      modes.push({ key: 'f1', label: 'Quiz: ' + sample.meta.f1label });
-      modes.push({ key: 'f2', label: 'Quiz: ' + sample.meta.f2label });
+      modes.push({ key: 'f1', label: sample.meta.f1label });
+      modes.push({ key: 'f2', label: sample.meta.f2label });
       break;
     case 'landmark':
-      modes.push({ key: 'f1', label: 'Quiz: Definition' });
-      modes.push({ key: 'f2', label: 'Quiz: Example' });
+      modes.push({ key: 'f1', label: 'Definition' });
+      modes.push({ key: 'f2', label: 'Example' });
       break;
   }
   return modes;
@@ -414,6 +428,8 @@ function updateModeButtons() {
   activeMode = modes.find(m => m.key === saved) ? saved : 'all';
 
   const el = document.getElementById('modes');
+  const modesSection = el.closest('.settings-section');
+  if (modesSection) modesSection.hidden = modes.length <= 1;
   el.innerHTML = modes.map(m =>
     `<button class="mode${activeMode === m.key ? ' active' : ''}" data-mode="${m.key}" aria-pressed="${activeMode === m.key}">${m.label}</button>`
   ).join('');
@@ -426,6 +442,7 @@ function updateModeButtons() {
     const ctx = getModeContext();
     if (ctx) { modeMemory[ctx] = activeMode; saveModeMemory(); }
     if (deck.length) { renderFront(deck[idx]); renderBack(deck[idx]); }
+    updateSettingsBadge(); updateFilterSummary();
   }));
 }
 
@@ -975,6 +992,86 @@ window.addEventListener('hashchange', () => jumpToHash());
 // HELP MODAL
 // ════════════════════════════════════════════════════════════════
 
+function toggleSettingsPanel(forceClose) {
+  const panel = document.getElementById('settings-panel');
+  const btn   = document.getElementById('btn-settings');
+  const summary = document.getElementById('filter-summary');
+  const open  = forceClose ? false : panel.classList.toggle('open');
+  if (forceClose) panel.classList.remove('open');
+  btn.setAttribute('aria-expanded', open);
+  if (summary) summary.style.display = open ? 'none' : '';
+  // Focus management (mobile only — panel is always visible on desktop)
+  if (window.matchMedia('(max-width:600px)').matches) {
+    if (open) {
+      const first = panel.querySelector('button, input, [tabindex]');
+      if (first) first.focus();
+    } else if (forceClose) {
+      btn.focus();
+    }
+  }
+}
+
+document.addEventListener('click', e => {
+  const panel = document.getElementById('settings-panel');
+  if (!panel?.classList.contains('open')) return;
+  if (!e.target.isConnected) return; // target was replaced by a re-render
+  if (e.target.closest('#settings-panel, #btn-settings, .filter-summary')) return;
+  toggleSettingsPanel(true);
+});
+
+function applyTagsVisibility() {
+  document.documentElement.classList.toggle('tags-enabled', tagsEnabled);
+  const toggle = document.getElementById('tags-toggle-input');
+  if (toggle) toggle.checked = tagsEnabled;
+  // If tags disabled and a tag filter is active, clear it
+  if (!tagsEnabled && state.tag) {
+    state.tag = null;
+    applyFilter();
+  }
+  updateLearningCount();
+  updateTagChips();
+}
+
+function updateFilterSummary() {
+  const el = document.getElementById('filter-summary');
+  if (!el) return;
+  const chips = [];
+  const deckLabel = state.deck !== 'all'
+    ? (document.querySelector(`.dbtn[data-deck="${state.deck}"]`)?.textContent || state.deck)
+    : null;
+  if (deckLabel) {
+    const color = DECK_COLORS[state.deck] || '#b85c4a';
+    chips.push(`<button class="fsumchip fsum-deck" style="--deck-color:${color}" onclick="toggleSettingsPanel()" aria-label="Deck: ${deckLabel}. Tap to open settings">${deckLabel}</button>`);
+  }
+  if (state.category !== 'all') {
+    const catLabel = document.querySelector(`#filter-cat .filt[data-cat="${state.category}"]`)?.textContent || state.category;
+    chips.push(`<button class="fsumchip" onclick="toggleSettingsPanel()" aria-label="Category: ${catLabel}. Tap to open settings">${catLabel}</button>`);
+  }
+  if (activeMode !== 'all') {
+    const modeLabel = document.querySelector(`#modes .mode.active`)?.textContent || activeMode;
+    chips.push(`<button class="fsumchip" onclick="toggleSettingsPanel()" aria-label="Mode: ${modeLabel}. Tap to open settings">${modeLabel}</button>`);
+  }
+  el.innerHTML = chips.join('');
+}
+
+function updateSettingsBadge() {
+  const badge = document.getElementById('settings-badge');
+  const btn   = document.getElementById('btn-settings');
+  if (!badge) return;
+  const count = [
+    state.deck !== 'all',
+    state.category !== 'all',
+    state.tag,
+    state.search.trim(),
+    activeMode !== 'all',
+    startFlipped,
+    state.smartReview
+  ].filter(Boolean).length;
+  badge.textContent = count || '';
+  badge.hidden = count === 0;
+  btn?.setAttribute('aria-label', count ? `Settings, ${count} active filter${count > 1 ? 's' : ''}` : 'Settings');
+}
+
 function openHelpModal() {
   document.getElementById('help-modal').classList.add('open');
   document.getElementById('help-overlay').classList.add('open');
@@ -1010,19 +1107,20 @@ document.addEventListener('DOMContentLoaded', () => {
     state.deck = btn.dataset.deck;
     state.category = 'all';
     applyFilter();
+    updateSettingsBadge(); updateFilterSummary();
   });
 
   // Search (debounced)
   document.getElementById('search-input').addEventListener('input', e => {
     clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => { state.search = e.target.value; applyFilter(); }, 150);
+    searchTimer = setTimeout(() => { state.search = e.target.value; applyFilter(); updateSettingsBadge(); updateFilterSummary(); }, 150);
   });
 
   // Smart review toggle
   document.getElementById('smart-review-input').addEventListener('change', e => {
     state.smartReview = e.target.checked;
     document.getElementById('smart-review-toggle').classList.toggle('checked', state.smartReview);
-    applyFilter();
+    applyFilter(); updateSettingsBadge(); updateFilterSummary();
   });
 
   // Start flipped toggle
@@ -1038,7 +1136,18 @@ document.addEventListener('DOMContentLoaded', () => {
     updateHintVisibility();
     updateLearningCount();
     refreshKnownLearningStat();
+    updateSettingsBadge(); updateFilterSummary();
   });
+
+  // Tags feature toggle
+  document.getElementById('tags-toggle-input').addEventListener('change', e => {
+    tagsEnabled = e.target.checked;
+    localStorage.setItem('msc_tags_enabled', tagsEnabled);
+    applyTagsVisibility();
+  });
+
+  // Apply tags visibility on load
+  applyTagsVisibility();
 
   // Grade buttons
   document.getElementById('btn-known').addEventListener('click', onKnown);

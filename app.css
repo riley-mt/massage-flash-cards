@@ -19,6 +19,92 @@ header { position: relative }
   font-size:.85rem; font-weight:700; cursor:pointer; line-height:1; transition:all .18s }
 .btn-help:hover { background:rgba(255,255,255,.15); color:#f0ebe0; border-color:rgba(255,255,255,.4) }
 
+/* Filter summary — mobile only */
+.filter-summary { display:none; }
+
+/* Gear/settings button — hidden on desktop, shown on mobile */
+.btn-settings { display:none; position:absolute; top:12px; right:48px; width:28px; height:28px;
+  border-radius:50%; border:1.5px solid rgba(255,255,255,.2); background:rgba(255,255,255,.07);
+  color:#aab0be; font-size:.9rem; cursor:pointer; transition:all .18s; }
+.btn-settings:hover { background:rgba(255,255,255,.15); color:#f0ebe0; border-color:rgba(255,255,255,.4) }
+.settings-badge { position:absolute; top:-4px; right:-4px; width:14px; height:14px;
+  border-radius:50%; background:#b85c4a; color:#fff; font-size:.52rem; font-weight:700;
+  display:flex; align-items:center; justify-content:center; }
+
+/* Settings panel: always visible on desktop */
+.settings-panel { position:relative; }
+.btn-settings-close { display:none; position:absolute; top:16px; right:18px;
+  background:none; border:none; color:#7a8090; font-size:1.3rem; cursor:pointer; line-height:1; }
+.btn-settings-close:hover { color:#f0ebe0; }
+@media (max-width:600px) {
+  .settings-panel.open .btn-settings-close { display:flex; align-items:center; justify-content:center; }
+}
+.options-row { flex-direction:column; align-items:flex-start; }
+
+/* ── Mobile layout ───────────────────────────────────────────── */
+@media (max-width: 600px) {
+  /* Full-height no-scroll layout */
+  body { height:100dvh; overflow:hidden; display:flex; flex-direction:column;
+    align-items:stretch; padding:8px 10px 6px; min-height:0; }
+  header { margin-bottom:6px; flex-shrink:0; }
+  header h1 { font-size:1.3rem; }
+  .app-subtitle { display:none; }
+  .eyebrow { font-size:.55rem; letter-spacing:3px; }
+
+  /* Show gear button */
+  .btn-settings { display:flex; align-items:center; justify-content:center; }
+
+  /* Deck strip: horizontal scroll, no wrap */
+  .deck-selector { flex-wrap:nowrap; overflow-x:auto; justify-content:flex-start;
+    padding-bottom:2px; margin-bottom:5px; scrollbar-width:none; -ms-overflow-style:none; flex-shrink:0; }
+  .deck-selector::-webkit-scrollbar { display:none; }
+  .dbtn { padding:4px 11px; font-size:.66rem; white-space:nowrap; flex-shrink:0; }
+
+  /* Category + tag strips */
+  #filter-cat, #filter-tags { flex-wrap:nowrap; overflow-x:auto; justify-content:flex-start;
+    scrollbar-width:none; -ms-overflow-style:none; flex-shrink:0; }
+  #filter-cat::-webkit-scrollbar,
+  #filter-tags::-webkit-scrollbar { display:none; }
+  .filt, .tag-chip { white-space:nowrap; flex-shrink:0; }
+
+  /* Search always visible */
+  .search-wrap { margin-bottom:6px; flex-shrink:0; }
+
+  /* Filter summary strip (collapsed state) */
+  .filter-summary { display:flex; flex-wrap:wrap; gap:4px; margin-top:-2px; margin-bottom:4px; flex-shrink:0; }
+  .filter-summary:empty { display:none; }
+  .fsumchip { padding:2px 9px; border-radius:100px; border:1.5px solid rgba(255,255,255,.25);
+    background:rgba(255,255,255,.08); color:#d0d5e0; font-size:.62rem; font-weight:600;
+    font-family:Georgia,serif; cursor:pointer; }
+  .fsumchip.fsum-deck { border-color:var(--deck-color, #b85c4a); background:color-mix(in srgb, var(--deck-color, #b85c4a) 15%, transparent); }
+
+  /* Settings panel: collapsed by default */
+  .settings-panel { display:none; flex-shrink:0; }
+  .settings-panel.open { display:block; background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08); border-radius:12px;
+    padding:10px; margin-bottom:6px; overflow-y:auto; max-height:55vh; }
+
+  /* Progress bar compact */
+  .prog { margin-bottom:6px; flex-shrink:0; width:100%; max-width:none; }
+
+  /* Card fills remaining space */
+  .scene { flex:1; min-height:0; height:auto !important; width:100%; max-width:none; margin:0 0 6px; }
+  .card { height:100%; }
+  .face { overflow-y:auto; }
+
+  /* Controls and grade row compact */
+  .controls { margin-bottom:4px; flex-shrink:0; gap:6px; }
+  .btn { padding:7px 14px; font-size:.75rem; }
+  .grade-row { margin-bottom:4px; flex-shrink:0; }
+  .btn-grade { padding:8px 18px; font-size:.76rem; }
+
+  /* Hide stats on mobile — visible in gear panel only */
+  .stats { display:none; }
+
+  /* Warn banner */
+  .warn-banner { flex-shrink:0; }
+}
+
 /* ── Help modal ──────────────────────────────────────────────── */
 .help-sections { display:grid; grid-template-columns:1fr 1fr; gap:14px 20px; margin:14px 0 }
 @media (max-width:520px) { .help-sections { grid-template-columns:1fr } }
@@ -47,21 +133,55 @@ header { position: relative }
 /* Fix hint border/color on dark back face */
 .back .hint { border-top-color: rgba(255,255,255,.08); color: #7a8090; }
 
-/* ── Deck Selector (Tier 1) ─────────────────────────────────── */
-.deck-selector { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:10px }
-.dbtn { padding:6px 16px; border-radius:100px; border:2px solid rgba(255,255,255,.15);
-  background:rgba(255,255,255,.06); color:#aab0be; font-size:.75rem; font-weight:600;
-  cursor:pointer; font-family:Georgia,serif; transition:all .18s; letter-spacing:.3px }
-.dbtn:hover { background:rgba(255,255,255,.13); color:#f0ebe0 }
-.dbtn.active              { background:#b85c4a; color:#fff; border-color:#b85c4a }
-.dbtn.active.d-bones     { background:#c9a84c; border-color:#c9a84c; color:#1a1f2e }
-.dbtn.active.d-pathology { background:#7a8a4a; border-color:#7a8a4a }
-.dbtn.active.d-muscles   { background:#4a7c8a; border-color:#4a7c8a }
-.dbtn.active.d-prime     { background:#7a5c9e; border-color:#7a5c9e }
+/* ── Settings panel sections ─────────────────────────────────── */
+.settings-section { padding-bottom:10px; margin-bottom:10px;
+  border-bottom:1px solid rgba(255,255,255,.08); }
+.settings-section--last { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+.settings-section--last .options-row { margin-bottom:0; }
+.settings-label { font-size:.58rem; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase; color:#555c6e; margin-bottom:7px;
+  /* reset h3 defaults */ line-height:1; }
+.settings-subsection-label { font-size:.55rem; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase; color:#444b5a; margin-top:10px; margin-bottom:6px;
+  padding-top:10px; border-top:1px solid rgba(255,255,255,.06);
+  width:100%; display:block; }
 
-/* ── Category chips (Tier 2) ─────────────────────────────────── */
-#filter-cat { display:flex; flex-wrap:wrap; gap:5px; justify-content:center; margin-bottom:6px; min-height:0 }
-#filter-cat:empty { margin-bottom:0 }
+/* ── Shared chip base (deck, category, mode, tag, summary) ──── */
+.dbtn, .filt, .mode, .tag-chip, .fsumchip {
+  padding:4px 13px; border-radius:100px; border:1.5px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.05); color:#aab0be; font-size:.72rem; font-weight:500;
+  cursor:pointer; font-family:Georgia,serif; transition:all .18s; letter-spacing:.2px;
+  white-space:nowrap; }
+.dbtn:hover, .filt:hover, .mode:hover { background:rgba(255,255,255,.12); color:#f0ebe0; border-color:rgba(255,255,255,.3); }
+
+/* Active chips — larger, filled */
+.dbtn.active, .filt.active, .mode.active, .fsumchip {
+  padding:5px 16px; font-size:.78rem; font-weight:700; }
+
+/* ── Deck Selector ───────────────────────────────────────────── */
+.deck-selector { display:flex; flex-wrap:wrap; gap:6px; justify-content:flex-start; margin-bottom:6px; }
+.dbtn { font-weight:600; }
+.dbtn.active              { background:#b85c4a; color:#fff; border-color:#b85c4a }
+.dbtn.active.d-bones      { background:#c9a84c; border-color:#c9a84c; color:#1a1f2e }
+.dbtn.active.d-pathology  { background:#7a8a4a; border-color:#7a8a4a }
+.dbtn.active.d-muscles    { background:#4a7c8a; border-color:#4a7c8a }
+.dbtn.active.d-prime      { background:#7a5c9e; border-color:#7a5c9e }
+
+/* ── Category chips ──────────────────────────────────────────── */
+#filter-cat { display:flex; flex-wrap:wrap; align-items:center; gap:5px; justify-content:flex-start; margin-bottom:0; min-height:0; }
+#filter-cat:empty { margin-bottom:0; }
+.filt { border-radius:100px; }
+.filt.active { background:#b85c4a; color:#fff; border-color:#b85c4a; }
+.filt.active.f { background:#4a7c8a; border-color:#4a7c8a; }
+
+/* ── Tags feature flag — hidden unless :root has .tags-enabled ── */
+:root:not(.tags-enabled) #filter-tags,
+:root:not(.tags-enabled) .card-tag-area,
+:root:not(.tags-enabled) .tag-assign-dropdown,
+:root:not(.tags-enabled) #tags-toggle ~ * { /* keep toggle itself visible */ }
+:root:not(.tags-enabled) #filter-tags { display:none !important; }
+:root:not(.tags-enabled) .card-tag-area { display:none !important; }
+:root:not(.tags-enabled) .tag-assign-dropdown { display:none !important; }
 
 /* ── Tag chips (Tier 3) ──────────────────────────────────────── */
 #filter-tags { display:flex; flex-wrap:wrap; gap:5px; justify-content:center; margin-bottom:8px; align-items:center }
