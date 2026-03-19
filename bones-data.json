@@ -1,0 +1,179 @@
+[
+  {
+    "category": "bones-joints",
+    "type": "qa",
+    "q": "What are the bones of the shoulder girdle?",
+    "a": "Clavicle (collarbone) and Scapula (shoulder blade)."
+  },
+  {
+    "category": "bones-joints",
+    "type": "qa",
+    "q": "What is the ASIS?",
+    "a": "Anterior Superior Iliac Spine - a bony landmark on the front of the pelvis used as a reference point."
+  },
+  {
+    "category": "bones-joints",
+    "type": "qa",
+    "q": "Name the 8 carpal bones.",
+    "a": "Scaphoid, Lunate, Triquetrum, Pisiform, Trapezium, Trapezoid, Capitate, Hamate."
+  },
+  {
+    "category": "bones-joints",
+    "type": "qa",
+    "q": "What is the xiphoid process?",
+    "a": "The small cartilaginous extension at the inferior end of the sternum."
+  },
+  {
+    "category": "bones-joints",
+    "type": "qa",
+    "q": "How many vertebrae are in each spinal region?",
+    "a": "Cervical: 7, Thoracic: 12, Lumbar: 5, Sacral: 5 (fused), Coccygeal: 4 (fused)."
+  },
+  {
+    "category": "bones-joints",
+    "type": "qa",
+    "q": "What is the greater trochanter?",
+    "a": "A bony prominence on the lateral proximal femur; attachment point for several hip muscles."
+  },
+  {
+    "category": "bones-joints",
+    "type": "qa",
+    "q": "What bones form the knee joint?",
+    "a": "Femur, Tibia, and Patella (kneecap)."
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Process",
+    "f1label": "Definition",
+    "f1": "A broad designation for any bump or projection on a bone.",
+    "f2label": "Example",
+    "f2": "mastoid process, xiphoid process, coracoid process"
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Spine",
+    "f1label": "Definition",
+    "f1": "An abrupt or pointed bony projection.",
+    "f2label": "Example",
+    "f2": "spine of the scapula, anterior superior iliac spine (ASIS)"
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Trochanter",
+    "f1label": "Definition",
+    "f1": "A large, blunt bony process.",
+    "f2label": "Example",
+    "f2": "greater and lesser trochanter of the femur"
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Tubercle",
+    "f1label": "Definition",
+    "f1": "A small rounded bump on a bone.",
+    "f2label": "Example",
+    "f2": "greater and lesser tubercles of the humerus"
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Tuberosity",
+    "f1label": "Definition",
+    "f1": "A large, often rough and irregular bump on a bone.",
+    "f2label": "Example",
+    "f2": "ischial tuberosity, radial tuberosity"
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Line",
+    "f1label": "Definition",
+    "f1": "A low ridge on a bone that doesn't stick up very far.",
+    "f2label": "Example",
+    "f2": "linea aspera of the femur"
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Crest",
+    "f1label": "Definition",
+    "f1": "A prominent, sharp ridge on a bone.",
+    "f2label": "Example",
+    "f2": "iliac crest, tibial crest"
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Head",
+    "f1label": "Definition",
+    "f1": "A large rounded end of a long bone, usually set off from the shaft by a narrower 'neck.'",
+    "f2label": "Example",
+    "f2": "head of the humerus, head of the femur"
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Condyle",
+    "f1label": "Definition",
+    "f1": "A rounded end of a long bone, usually NOT set off by a neck, and typically smaller than a head.",
+    "f2label": "Example",
+    "f2": "medial and lateral condyles of the femur"
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Epicondyle",
+    "f1label": "Definition",
+    "f1": "A bump located directly above (epi-) a condyle.",
+    "f2label": "Example",
+    "f2": "medial and lateral epicondyles of the humerus"
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Facet",
+    "f1label": "Definition",
+    "f1": "A smooth, mostly flat articular surface on a bone.",
+    "f2label": "Example",
+    "f2": "facets of the vertebrae"
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Fossa",
+    "f1label": "Definition",
+    "f1": "A basin-like depression or hollow in a bone.",
+    "f2label": "Example",
+    "f2": "supraspinous fossa, infraspinous fossa"
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Foramen",
+    "f1label": "Definition",
+    "f1": "A hole or opening through a bone (Latin for 'opening').",
+    "f2label": "Example",
+    "f2": "foramen magnum of the skull, foramina of the sacrum"
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Notch",
+    "f1label": "Definition",
+    "f1": "A deep indentation or cut-out in the edge of a bone.",
+    "f2label": "Example",
+    "f2": "sciatic notch, trochlear notch"
+  },
+  {
+    "category": "landmarks",
+    "type": "landmark",
+    "name": "Angle",
+    "f1label": "Definition",
+    "f1": "A point where two bony edges diverge from a common point.",
+    "f2label": "Example",
+    "f2": "superior and inferior angles of the scapula"
+  }
+]

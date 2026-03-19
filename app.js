@@ -697,11 +697,22 @@ function announceCard(card, isBack) {
   const el = document.getElementById('sr-announce');
   if (!el) return;
   if (isBack) {
-    const fields = card.fields.map(f => (f.label ? f.label + ': ' : '') + f.value).join('. ');
-    el.textContent = 'Answer: ' + fields;
+    const visibleFields = activeMode === 'all'
+      ? card.fields
+      : card.fields.filter(f => f.key === activeMode);
+    const fields = visibleFields.map(f => (f.label ? f.label + ': ' : '') + f.value).join('. ');
+    el.textContent = fields;
   } else {
-    el.textContent = 'Card ' + (idx + 1) + ' of ' + deck.length + '. ' + card.title +
-      (card.subtitle ? '. ' + card.subtitle : '');
+    const modeLabel = activeMode === 'all'
+      ? card.fields.map(f => f.label).filter(Boolean).join(' and ')
+      : (card.fields.find(f => f.key === activeMode)?.label || '');
+    const parts = [
+      'Card ' + (idx + 1) + ' of ' + deck.length,
+      card.title,
+      card.subtitle || null,
+      modeLabel || null
+    ].filter(Boolean);
+    el.textContent = parts.join('. ');
   }
 }
 
