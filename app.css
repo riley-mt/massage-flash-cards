@@ -116,12 +116,19 @@ header { position: relative }
 .help-sections { display:grid; grid-template-columns:1fr 1fr; gap:14px 20px; margin:14px 0 }
 @media (max-width:520px) { .help-sections { grid-template-columns:1fr } }
 .help-section h3 { font-size:.65rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
-  color:#7a8090; margin:0 0 7px }
+  margin:0 0 7px; }
+.help-section:nth-child(1) h3 { color:#4a7c8a; }
+.help-section:nth-child(2) h3 { color:#c9a84c; }
+.help-section:nth-child(3) h3 { color:#b85c4a; }
+.help-section:nth-child(4) h3 { color:#7a5c9e; }
 .help-section ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:5px }
 .help-section li { font-size:.78rem; color:#c0c8d8; line-height:1.4 }
 .help-key { display:inline-block; padding:1px 6px; border-radius:4px;
-  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15);
   font-family:monospace; font-size:.72rem; color:#f0ebe0; white-space:nowrap }
+/* Grading keys colored by outcome */
+.help-section:nth-child(2) li:nth-child(1) .help-key { border-color:#22c55e55; background:#22c55e18; color:#22c55e; }
+.help-section:nth-child(2) li:nth-child(2) .help-key { border-color:#f59e0b55; background:#f59e0b18; color:#f59e0b; }
 .help-footer { display:flex; align-items:center; justify-content:flex-end;
   margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,.08) }
 
