@@ -1062,6 +1062,9 @@ function updateFilterSummary() {
     const label = state.search.length > 18 ? state.search.slice(0, 16) + '\u2026' : state.search;
     chips.push(`<button class="fsumchip fsum-search" onclick="document.getElementById('search-input').focus();document.getElementById('search-input').select();" aria-label="Search: ${state.search}. Tap to edit search">${label}</button>`);
   }
+  if (!chips.length) {
+    chips.push(`<button class="fsumchip fsum-all" onclick="toggleSettingsPanel()" aria-label="All cards. Tap to open settings">All</button>`);
+  }
   el.innerHTML = chips.join('');
 }
 

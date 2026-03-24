@@ -21,8 +21,7 @@ header { position: relative }
 
 /* Filter summary */
 .filter-summary { display:flex; flex-wrap:wrap; gap:4px; justify-content:center;
-  max-width:560px; margin:0 auto 8px; min-height:0; }
-.filter-summary:empty { display:none; }
+  max-width:560px; margin:0 auto 8px; }
 
 /* Gear/settings button — visible on both desktop and mobile */
 .btn-settings { display:flex; align-items:center; justify-content:center;
@@ -68,7 +67,6 @@ header { position: relative }
 
   /* Filter summary strip (collapsed state) */
   .filter-summary { display:flex; flex-wrap:wrap; gap:4px; margin-top:-2px; margin-bottom:4px; flex-shrink:0; }
-  .filter-summary:empty { display:none; }
   .fsumchip { padding:2px 9px; border-radius:100px; border:1.5px solid rgba(255,255,255,.25);
     background:rgba(255,255,255,.08); color:#d0d5e0; font-size:.62rem; font-weight:600;
     font-family:Georgia,serif; cursor:pointer; }
@@ -187,6 +185,7 @@ header { position: relative }
 .fsumchip.fsum-flipped  { border-color:#4a7c8a; background:rgba(74,124,138,.15); color:#4a9aad; }
 .fsumchip.fsum-learning { border-color:#f59e0b; background:rgba(245,158,11,.15); color:#f59e0b; }
 .fsumchip.fsum-search   { border-color:#6b8aaf; background:rgba(107,138,175,.15); color:#8aafd4; }
+.fsumchip.fsum-all      { border-color:rgba(255,255,255,.2); background:rgba(255,255,255,.06); color:#9098a9; }
 
 /* ── Deck Selector ───────────────────────────────────────────── */
 .deck-selector { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:10px; }
